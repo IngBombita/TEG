@@ -11,8 +11,10 @@
 
 import React from 'react';
 import map from './src/map.png';
-// import './src/style.css';
-// comente este estilo ya que ahora tenemos que mapear las provincias en nuestra escala que es el tamaño por default de la imagen
+import './src/style.css';
+
+import * as polygons from './src/polygons.json';
+import { pointInsidePolygon } from '../../math/polygon';
 
 const WidthAbsoluteScale = 1064;
 const HeightAbsoluteScale = 2160;
@@ -24,10 +26,6 @@ export default class HomePage extends React.Component {
     this.state = {
       relativeScaleWidth: 0,
       relativeScaleHeight: 0,
-      xScreen: 0,
-      yScreen: 0,
-      xMap: 0,
-      yMap: 0,
     };
     this.imgRef = React.createRef();
   }
@@ -35,29 +33,19 @@ export default class HomePage extends React.Component {
   onMapClick = elem => {
     const x = elem.pageX;
     const y = elem.pageY;
-    console.log('Mouse pos: (', x, ',', y, ')');
-    this.setState({
-      xScreen: x,
-      yScreen: y,
-    });
+
     this.calculatePositionOnMap(x, y);
   };
 
   calculatePositionOnMap = (xScreen, yScreen) => {
     const wClient = this.state.relativeScaleWidth;
     const hClient = this.state.relativeScaleHeight;
-    const xMapScale = (WidthAbsoluteScale / wClient) * xScreen;
-    const yMapScale = (HeightAbsoluteScale / hClient) * yScreen;
 
-    console.log(`xMap: ${xMapScale} yMap: ${yMapScale}`);
+    const xMap = ((WidthAbsoluteScale / wClient) * xScreen).toFixed(0);
+    const yMap = ((HeightAbsoluteScale / hClient) * yScreen).toFixed(0);
 
-    this.setState({
-      xMap: xMapScale,
-      yMap: yMapScale,
-    });
-
-    console.log(`xMap: ${this.state.xMap} yMap: ${this.state.yMap}`);
-    console.log(`xMap: ${this.state.xScreen} yMap: ${this.state.yScreen}`);
+    if (pointInsidePolygon({ x: xMap, y: yMap }, polygons.Jujuy))
+      console.log('Jujuy seleccionada');
   };
 
   updateDimensions = () => {
