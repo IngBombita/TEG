@@ -14,15 +14,20 @@ import map from './src/map.png';
 //import './src/style.css'; 
 //comente este estilo ya que ahora tenemos que mapear las provincias en nuestra escala que es el tamaño por default de la imagen 
 
+let WidthAbsoluteScale = 1064;
+let HeightAbsoluteScale = 2160;
+
 /* eslint-disable react/prefer-stateless-function */
 export default class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      imgWidth: 0,
-      imgHeight: 0,
+      relativeScaleWidth: 0,
+      relativeScaleHeight: 0,
       xScreen: 0,
-      yScreen:0
+      yScreen:0,
+      xMap:0,
+      yMap:0
     };
     this.imgRef = React.createRef();
   }
@@ -35,12 +40,30 @@ export default class HomePage extends React.Component {
       xScreen: x,
       yScreen: y
     })
+    this.calculatePositionOnMap(x,y);
   };
+
+  calculatePositionOnMap = (xScreen,yScreen) =>{
+
+    let wClient = this.state.relativeScaleWidth;
+    let hClient = this.state.relativeScaleHeight;
+
+    let xMapScale = (WidthAbsoluteScale/wClient) * xScreen;
+
+    let yMapScale = (HeightAbsoluteScale/hClient) * yScreen;
+
+    console.log('xMap: '+xMapScale+' yMap: '+yMapScale)
+
+    this.setState({
+      xMap: xMapScale,
+      yMap: yMapScale
+    })
+  }
 
   updateDimensions = () => {
     this.setState({
-      imgWidth: this.imgRef.current.clientWidth,
-      imgHeight: this.imgRef.current.clientHeight,
+      relativeScaleWidth: this.imgRef.current.clientWidth,
+      relativeScaleHeight: this.imgRef.current.clientHeight,
     });
   }
 
@@ -54,10 +77,22 @@ export default class HomePage extends React.Component {
 
   onLoad = () => {
     this.setState({
-      imgWidth: this.imgRef.current.clientWidth,
-      imgHeight: this.imgRef.current.clientHeight,
+      relativeScaleWidth: this.imgRef.current.clientWidth,
+      relativeScaleHeight: this.imgRef.current.clientHeight,
     });
   };
+
+//----------------------funcion exclusiva para crear poligonos en el mapa-------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
 
   render() {
     return (
