@@ -11,11 +11,11 @@
 
 import React from 'react';
 import map from './src/map.png';
-//import './src/style.css'; 
-//comente este estilo ya que ahora tenemos que mapear las provincias en nuestra escala que es el tamaño por default de la imagen 
+// import './src/style.css';
+// comente este estilo ya que ahora tenemos que mapear las provincias en nuestra escala que es el tamaño por default de la imagen
 
-let WidthAbsoluteScale = 1064;
-let HeightAbsoluteScale = 2160;
+const WidthAbsoluteScale = 1064;
+const HeightAbsoluteScale = 2160;
 
 /* eslint-disable react/prefer-stateless-function */
 export default class HomePage extends React.Component {
@@ -25,9 +25,9 @@ export default class HomePage extends React.Component {
       relativeScaleWidth: 0,
       relativeScaleHeight: 0,
       xScreen: 0,
-      yScreen:0,
-      xMap:0,
-      yMap:0
+      yScreen: 0,
+      xMap: 0,
+      yMap: 0,
     };
     this.imgRef = React.createRef();
   }
@@ -38,34 +38,34 @@ export default class HomePage extends React.Component {
     console.log('Mouse pos: (', x, ',', y, ')');
     this.setState({
       xScreen: x,
-      yScreen: y
-    })
-    this.calculatePositionOnMap(x,y);
+      yScreen: y,
+    });
+    this.calculatePositionOnMap(x, y);
   };
 
-  calculatePositionOnMap = (xScreen,yScreen) =>{
+  calculatePositionOnMap = (xScreen, yScreen) => {
+    const wClient = this.state.relativeScaleWidth;
+    const hClient = this.state.relativeScaleHeight;
+    const xMapScale = (WidthAbsoluteScale / wClient) * xScreen;
+    const yMapScale = (HeightAbsoluteScale / hClient) * yScreen;
 
-    let wClient = this.state.relativeScaleWidth;
-    let hClient = this.state.relativeScaleHeight;
-
-    let xMapScale = (WidthAbsoluteScale/wClient) * xScreen;
-
-    let yMapScale = (HeightAbsoluteScale/hClient) * yScreen;
-
-    console.log('xMap: '+xMapScale+' yMap: '+yMapScale)
+    console.log(`xMap: ${xMapScale} yMap: ${yMapScale}`);
 
     this.setState({
       xMap: xMapScale,
-      yMap: yMapScale
-    })
-  }
+      yMap: yMapScale,
+    });
+
+    console.log(`xMap: ${this.state.xMap} yMap: ${this.state.yMap}`);
+    console.log(`xMap: ${this.state.xScreen} yMap: ${this.state.yScreen}`);
+  };
 
   updateDimensions = () => {
     this.setState({
       relativeScaleWidth: this.imgRef.current.clientWidth,
       relativeScaleHeight: this.imgRef.current.clientHeight,
     });
-  }
+  };
 
   componentDidMount() {
     window.addEventListener('resize', this.updateDimensions);
@@ -82,17 +82,7 @@ export default class HomePage extends React.Component {
     });
   };
 
-//----------------------funcion exclusiva para crear poligonos en el mapa-------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
+  // ----------------------funcion exclusiva para crear poligonos en el mapa-------------------------------------------------------------------
 
   render() {
     return (
