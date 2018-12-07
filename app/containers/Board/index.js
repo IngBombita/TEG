@@ -11,7 +11,8 @@
 
 import React from 'react';
 import map from './src/map.png';
-import './src/style.css';
+//import './src/style.css'; 
+//comente este estilo ya que ahora tenemos que mapear las provincias en nuestra escala que es el tamaño por default de la imagen 
 
 /* eslint-disable react/prefer-stateless-function */
 export default class HomePage extends React.Component {
@@ -20,6 +21,8 @@ export default class HomePage extends React.Component {
     this.state = {
       imgWidth: 0,
       imgHeight: 0,
+      xScreen: 0,
+      yScreen:0
     };
     this.imgRef = React.createRef();
   }
@@ -28,16 +31,17 @@ export default class HomePage extends React.Component {
     const x = elem.pageX;
     const y = elem.pageY;
     console.log('Mouse pos: (', x, ',', y, ')');
+    this.setState({
+      xScreen: x,
+      yScreen: y
+    })
   };
 
-  updateDimensions() {
+  updateDimensions = () => {
     this.setState({
       imgWidth: this.imgRef.current.clientWidth,
       imgHeight: this.imgRef.current.clientHeight,
     });
-    console.log(
-      `Width : ${this.state.imgWidth}Height : ${this.state.imgHeight}`,
-    );
   }
 
   componentDidMount() {
@@ -49,9 +53,10 @@ export default class HomePage extends React.Component {
   }
 
   onLoad = () => {
-    const img = this.imgRef.current;
-    console.log(img);
-    console.log(` Width: ${img.clientWidth} Height: ${img.clientHeight}`);
+    this.setState({
+      imgWidth: this.imgRef.current.clientWidth,
+      imgHeight: this.imgRef.current.clientHeight,
+    });
   };
 
   render() {
