@@ -11,37 +11,65 @@
 
 import React from 'react';
 import map from './src/map.png';
-import { runInThisContext } from 'vm';
+import './src/style.css';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      height: 0,
-      width: 0
-    }
+      imgWidth: 0,
+      imgHeight: 0,
+    };
     this.imgRef = React.createRef();
   }
-  onMapClick = (elem) => {
-    var x = elem.pageX;
-    var y = elem.pageY;
-    console.log("Mouse pos: (", x, ',', y, ')');
+
+  onMapClick = elem => {
+    const x = elem.pageX;
+    const y = elem.pageY;
+    console.log('Mouse pos: (', x, ',', y, ')');
+  };
+
+  updateDimensions() {
+    this.setState({
+      imgWidth: this.imgRef.current.clientWidth,
+      imgHeight: this.imgRef.current.clientHeight,
+    });
+    console.log(
+      `Width : ${this.state.imgWidth}Height : ${this.state.imgHeight}`,
+    );
   }
 
   componentDidMount() {
-    
+    window.addEventListener('resize', this.updateDimensions);
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  }
+
   onLoad = () => {
-    console.log("hola vieja");
-    var img = this.imgRef.current;
-    
+    const img = this.imgRef.current;
+    console.log(img);
     console.log(` Width: ${img.clientWidth} Height: ${img.clientHeight}`);
-  }
+  };
+
   render() {
     return (
-      <div /*ref={this.imgRef}*/>
-        <img src={map} ref={this.imgRef} onLoad={this.onLoad} alt="board" onClick={this.onMapClick} />
+      <div
+        onClick={this.onMapClick}
+        onKeyDown={() => {}}
+        role="button"
+        tabIndex="0"
+        id="mapId"
+      >
+        <img
+          src={map}
+          ref={this.imgRef}
+          onLoad={this.onLoad}
+          alt="board"
+          className="map"
+        />
       </div>
     );
   }
