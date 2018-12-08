@@ -1,0 +1,121 @@
+.chip {
+  object-fit: contain;
+  position: absolute;
+}
+
+#chipJujuy, #chipSalta, #chipSantiago, #chipTucumán, #chipMisiones, #chipCorrientes,
+#chipCórdoba, #chipSanJuan, #chipSanLuis, #chipBuenosAires, #chipEntreRíos, #chipSantaFé,
+#chipLaPampa, #chipFormosa, #chipRíoNegro, #chipNeuquén, #chipChubut, #chipSantaCruz,
+#chipTierraDelFuego, #chipIslasMalvinas, #chipBandaOriental, #chipLaRioja, #chipCatamarca,
+#chipMendoza, #chipCABA, #chipChaco {
+  width: 2.2%;
+  height: 1.2%;
+
+  position: absolute;
+  background-color: transparent;
+  border: none;
+}
+#chipJujuy {
+  left: 30%;
+  top: 4%;
+}
+#chipSalta {
+  left: 38%;
+  top: 10%;
+}
+#chipFormosa {
+  left: 67%;
+  top: 12%;
+}
+#chipChaco {
+  left: 59%;
+  top: 15%;
+}
+#chipSantiago {
+  left: 45%;
+  top: 16%;
+}
+#chipTucumán {
+  left: 33%;
+  top: 16%;
+}
+#chipCatamarca {
+  left: 23%;
+  top: 17%;
+}
+#chipLaRioja {
+  left: 27%;
+  top: 24%;
+}
+#chipSanJuan {
+  left: 16%;
+  top: 28%;
+}
+#chipCórdoba {
+  left: 41%;
+  top: 28%;
+}
+#chipSantaFé {
+  left: 57%;
+  top: 26%;
+}
+#chipCorrientes {
+  left: 73%;
+  top: 22%;
+}
+#chipMisiones {
+  left: 94%;
+  top: 17%;
+}
+#chipEntreRíos {
+  left: 64%;
+  top: 31%;
+}
+#chipBuenosAires {
+  left: 58%;
+  top: 44%;
+}
+#chipCABA {
+  left: 67%;
+  top: 38%;
+}
+#chipSanLuis {
+  left: 30%;
+  top: 33%;
+}
+#chipMendoza {
+  left: 19%;
+  top: 36%;
+}
+#chipLaPampa {
+  left: 34%;
+  top: 45%;
+}
+#chipNeuquén {
+  left: 12%;
+  top: 49%;
+}
+#chipRíoNegro {
+  left: 28%;
+  top: 55%;
+}
+#chipChubut {
+  left: 21%;
+  top: 65%;
+}
+#chipSantaCruz {
+  left: 24%;
+  top: 82%;
+}
+#chipTierraDelFuego {
+  left: 31%;
+  top: 97%;
+}
+#chipIslasMalvinas {
+  left: 59%;
+  top: 88%;
+}
+#chipBandaOriental {
+  left: 78%;
+  top: 39%;
+}
