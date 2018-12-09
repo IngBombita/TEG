@@ -13,8 +13,9 @@ import React from 'react';
 import map from './src/map.png';
 import './src/style.css';
 
-import * as polygons from './src/polygons.json';
 import { pointInsidePolygon } from '../../math/polygon';
+
+import * as Noroeste from './src/polygons/Noroeste.json';
 
 const WidthAbsoluteScale = 1064;
 const HeightAbsoluteScale = 2160;
@@ -44,8 +45,17 @@ export default class HomePage extends React.Component {
     const xMap = ((WidthAbsoluteScale / wClient) * xScreen).toFixed(0);
     const yMap = ((HeightAbsoluteScale / hClient) * yScreen).toFixed(0);
 
-    if (pointInsidePolygon({ x: xMap, y: yMap }, polygons.Jujuy))
-      console.log('Jujuy seleccionada');
+    const obj = {
+      x: xMap,
+      y: yMap,
+    };
+
+    const polys = Object.entries(Noroeste.default);
+    for (let i = 0; i < polys.length; i += 1) {
+      if (pointInsidePolygon(obj, polys[i][1])) {
+        console.log(`${polys[i][0]} seleccionada`);
+      }
+    }
   };
 
   updateDimensions = () => {
