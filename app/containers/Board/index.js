@@ -63,7 +63,7 @@ export default class HomePage extends React.Component {
 
   printProvince = () => {
     let result = '';
-    result = '\'nombreProvincia\':[ \n';
+    result = '"nombreProvincia":[ \n';
     this.points.forEach((currentValue, index) => {
       if (index === this.points.length - 1) {
         result += `[${currentValue[0]}, ${currentValue[1]}] \n ] `;
