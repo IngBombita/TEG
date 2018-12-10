@@ -16,6 +16,7 @@ import './src/style.css';
 import { pointInsidePolygon } from '../../math/polygon';
 
 import * as Noroeste from './src/polygons/Noroeste.json';
+import * as Noreste from './src/polygons/Noreste.json';
 
 const WidthAbsoluteScale = 1064;
 const HeightAbsoluteScale = 2160;
@@ -29,6 +30,10 @@ export default class HomePage extends React.Component {
       relativeScaleHeight: 0,
     };
     this.imgRef = React.createRef();
+
+    this.polygons = [];
+    this.polygons.push(Noroeste);
+    this.polygons.push(Noreste);
   }
 
   onMapClick = elem => {
@@ -50,10 +55,13 @@ export default class HomePage extends React.Component {
       y: yMap,
     };
 
-    const polys = Object.entries(Noroeste.default);
-    for (let i = 0; i < polys.length; i += 1) {
-      if (pointInsidePolygon(obj, polys[i][1])) {
-        console.log(`${polys[i][0]} seleccionada`);
+    for (let i = 0; i < this.polygons.length; i += 1) {
+      const polys = Object.entries(this.polygons[i].default);
+
+      for (let j = 0; j < polys.length; j += 1) {
+        if (pointInsidePolygon(obj, polys[j][1])) {
+          console.log(`${polys[j][0]} seleccionada`);
+        }
       }
     }
   };
