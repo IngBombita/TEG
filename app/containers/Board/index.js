@@ -31,9 +31,16 @@ export default class HomePage extends React.Component {
     };
     this.imgRef = React.createRef();
 
-    this.polygons = [];
-    this.polygons.push(Noroeste);
-    this.polygons.push(Noreste);
+    this.areas = [];
+    this.areas.push(Noroeste.default);
+    this.areas.push(Noreste.default);
+
+    this.provinces = {};
+    for (let i = 0; i < this.areas.length; i += 1) {
+      this.provinces = { ...this.provinces, ...this.areas[i] };
+    }
+
+    this.provinces = Object.entries(this.provinces);
   }
 
   onMapClick = elem => {
@@ -49,21 +56,6 @@ export default class HomePage extends React.Component {
 
     const xMap = ((WidthAbsoluteScale / wClient) * xScreen).toFixed(0);
     const yMap = ((HeightAbsoluteScale / hClient) * yScreen).toFixed(0);
-
-    const obj = {
-      x: xMap,
-      y: yMap,
-    };
-
-    for (let i = 0; i < this.polygons.length; i += 1) {
-      const polys = Object.entries(this.polygons[i].default);
-
-      for (let j = 0; j < polys.length; j += 1) {
-        if (pointInsidePolygon(obj, polys[j][1])) {
-          console.log(`${polys[j][0]} seleccionada`);
-        }
-      }
-    }
   };
 
   updateDimensions = () => {
