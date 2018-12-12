@@ -31,10 +31,10 @@ export default class HomePage extends React.Component {
     this.points = [];
 
     alert(
-      'PARA EMPEZAR COMIENZE TRAZANDO SU POLIGONO, CUANDO TERMINE TOQUE LA PROVINCIA DE JUJUY',
+      'PARA EMPEZAR COMIENCE TRAZANDO SU POLÍGONO, CUANDO TERMINE TOQUE LA PROVINCIA DE JUJUY',
     );
     alert(
-      'UNA VEZ TERMINADO EL POLIGONO E IMPREZA LAS CORDENADAS, SEGIR CON EL SIGUIENTE POLIGONO ',
+      'UNA VEZ TERMINADO EL POLÍGONO E IMPRESAS LAS CORDENADAS, SEGUIR CON EL SIGUIENTE POLÍGONO',
     );
   }
 
@@ -63,12 +63,12 @@ export default class HomePage extends React.Component {
 
   printProvince = () => {
     let result = '';
-    result = '"nombreProvincia":[ \n';
+    result = '"nombreProvincia": [ \n';
     this.points.forEach((currentValue, index) => {
       if (index === this.points.length - 1) {
-        result += `[${currentValue[0]}, ${currentValue[1]}] \n ] `;
+        result += `${currentValue[0]}, ${currentValue[1]} \n]`;
       } else {
-        result += `[${currentValue[0]}, ${currentValue[1]}], \n`;
+        result += `${currentValue[0]}, ${currentValue[1]}, \n`;
       }
     });
     alert(result);
