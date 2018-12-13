@@ -7,16 +7,17 @@
  * component (SFC), hot reloading does not currently support SFCs. If hot
  * reloading is not a necessity for you then you can refactor it and remove
  * the linting exception.
- */
+*/
 
+import ImageMapper from 'react-image-mapper';
 import React from 'react';
 import map from './src/map.png';
 import './src/style.css';
-
-import { pointInsidePolygon } from '../../math/polygon';
-
 import * as Noroeste from './src/polygons/Noroeste.json';
 import * as Noreste from './src/polygons/Noreste.json';
+import * as Centro from './src/polygons/Centro.json';
+import * as Cuyo from './src/polygons/Cuyo.json';
+import * as Patagonia from './src/polygons/Patagonia.json';
 
 const WidthAbsoluteScale = 1064;
 const HeightAbsoluteScale = 2160;
@@ -25,15 +26,13 @@ const HeightAbsoluteScale = 2160;
 export default class HomePage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      relativeScaleWidth: 0,
-      relativeScaleHeight: 0,
-    };
-    this.imgRef = React.createRef();
 
     this.areas = [];
     this.areas.push(Noroeste.default);
     this.areas.push(Noreste.default);
+    this.areas.push(Centro.default);
+    this.areas.push(Cuyo.default);
+    this.areas.push(Patagonia.default);
 
     this.provinces = {};
     for (let i = 0; i < this.areas.length; i += 1) {
@@ -41,46 +40,23 @@ export default class HomePage extends React.Component {
     }
 
     this.provinces = Object.entries(this.provinces);
+    console.log(this.provinces);
+
+    this.map = {
+      name: 'Provinces',
+      areas: [],
+    };
+    for (let index = 0; index < this.provinces.length; index += 1) {
+      const province = this.provinces[index];
+      const objProvince = {
+        name: province[0],
+        shape: 'poly',
+        coords: province[1],
+      };
+      this.map.areas[index] = objProvince;
+    }
+    console.log(this.map);
   }
-
-  onMapClick = elem => {
-    const x = elem.pageX;
-    const y = elem.pageY;
-
-    this.calculatePositionOnMap(x, y);
-  };
-
-  calculatePositionOnMap = (xScreen, yScreen) => {
-    const wClient = this.state.relativeScaleWidth;
-    const hClient = this.state.relativeScaleHeight;
-
-    const xMap = ((WidthAbsoluteScale / wClient) * xScreen).toFixed(0);
-    const yMap = ((HeightAbsoluteScale / hClient) * yScreen).toFixed(0);
-  };
-
-  updateDimensions = () => {
-    this.setState({
-      relativeScaleWidth: this.imgRef.current.clientWidth,
-      relativeScaleHeight: this.imgRef.current.clientHeight,
-    });
-  };
-
-  componentDidMount() {
-    window.addEventListener('resize', this.updateDimensions);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateDimensions);
-  }
-
-  onLoad = () => {
-    this.setState({
-      relativeScaleWidth: this.imgRef.current.clientWidth,
-      relativeScaleHeight: this.imgRef.current.clientHeight,
-    });
-  };
-
-  // ----------------------funcion exclusiva para crear poligonos en el mapa-------------------------------------------------------------------
 
   render() {
     return (
@@ -91,13 +67,7 @@ export default class HomePage extends React.Component {
         tabIndex="0"
         id="mapId"
       >
-        <img
-          src={map}
-          ref={this.imgRef}
-          onLoad={this.onLoad}
-          alt="board"
-          className="map"
-        />
+        <ImageMapper src={map} map={this.map} />
       </div>
     );
   }
