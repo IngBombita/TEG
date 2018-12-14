@@ -7,7 +7,7 @@ export default class Chip extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      armies: 0
+      armies: 0,
     };
   }
 
