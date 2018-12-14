@@ -9,6 +9,7 @@
  * the linting exception.
 */
 
+import ReactResizeDetector from 'react-resize-detector';
 import ImageMapper from 'react-image-mapper';
 import React from 'react';
 import map from './src/map.png';
@@ -22,7 +23,6 @@ import * as Patagonia from './src/polygons/Patagonia.json';
 const WidthAbsoluteScale = 1064;
 const HeightAbsoluteScale = 2160;
 
-/* eslint-disable react/prefer-stateless-function */
 export default class HomePage extends React.Component {
   constructor(props) {
     super(props);
@@ -34,13 +34,14 @@ export default class HomePage extends React.Component {
     this.areas.push(Cuyo.default);
     this.areas.push(Patagonia.default);
 
+    this.state = { clientWidth: 0 };
+
     this.provinces = {};
     for (let i = 0; i < this.areas.length; i += 1) {
       this.provinces = { ...this.provinces, ...this.areas[i] };
     }
 
     this.provinces = Object.entries(this.provinces);
-    console.log(this.provinces);
 
     this.map = {
       name: 'Provinces',
@@ -55,8 +56,11 @@ export default class HomePage extends React.Component {
       };
       this.map.areas[index] = objProvince;
     }
-    console.log(this.map);
   }
+
+  onResize = width => {
+    this.setState({ clientWidth: width });
+  };
 
   render() {
     return (
@@ -67,7 +71,13 @@ export default class HomePage extends React.Component {
         tabIndex="0"
         id="mapId"
       >
-        <ImageMapper src={map} map={this.map} />
+        <ReactResizeDetector handleWidth onResize={this.onResize} />
+        <ImageMapper
+          src={map}
+          map={this.map}
+          width={this.state.clientWidth}
+          imgWidth={WidthAbsoluteScale}
+        />
       </div>
     );
   }
