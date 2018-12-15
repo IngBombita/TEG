@@ -8,10 +8,13 @@
  * reloading is not a necessity for you then you can refactor it and remove
  * the linting exception.
 */
+import Button from '@material-ui/core/Button';
 
 import ReactResizeDetector from 'react-resize-detector';
 import ImageMapper from 'react-image-mapper';
 import React from 'react';
+import ReactDice from 'react-dice-complete';
+import 'react-dice-complete/dist/react-dice-complete.css';
 import map from './src/map.png';
 import './src/style.css';
 import * as Noroeste from './src/polygons/Noroeste.json';
@@ -63,53 +66,81 @@ export default class HomePage extends React.Component {
     this.setState({ clientWidth: width });
   };
 
+  onClickInMap = event => {
+    console.log(event);
+  };
+
+  rollAll = () => {
+    this.reactDice.rollAll()
+  };
+
+  rollDoneCallback = num => {
+    console.log(`You rolled a ${num}`);
+  };
+
   render() {
     return (
-      <div
-        onClick={this.onMapClick}
-        onKeyDown={() => {}}
-        role="button"
-        tabIndex="0"
-        id="mapId"
-      >
-        <Chip color="red" province="Jujuy" />
-        <Chip color="blue" province="Salta" />
-        <Chip color="yellow" province="Misiones" />
-        <Chip color="green" province="Tucumán" />
-        <Chip color="violet" province="Catamarca" />
-        <Chip color="orange" province="Santiago" />
+      <div>
+        <div
+          onClick={this.onMapClick}
+          onKeyDown={() => {}}
+          role="button"
+          tabIndex="0"
+          id="mapId"
+        >
+          <ReactResizeDetector handleWidth onResize={this.onResize} />
+          <ImageMapper
+            src={map}
+            map={this.map}
+            width={this.state.clientWidth}
+            imgWidth={WidthAbsoluteScale}
+            onClick={this.onClickInMap}
+          />
+          <Chip color="red" province="Jujuy" />
+          <Chip color="blue" province="Salta" />
+          <Chip color="yellow" province="Misiones" />
+          <Chip color="green" province="Tucumán" />
+          <Chip color="violet" province="Catamarca" />
+          <Chip color="orange" province="Santiago" />
 
-        <Chip color="red" province="Formosa" />
-        <Chip color="blue" province="Chaco" />
-        <Chip color="yellow" province="SantaFé" />
-        <Chip color="green" province="Corrientes" />
-        <Chip color="violet" province="EntreRíos" />
-        <Chip color="orange" province="Córdoba" />
+          <Chip color="red" province="Formosa" />
+          <Chip color="blue" province="Chaco" />
+          <Chip color="yellow" province="SantaFé" />
+          <Chip color="green" province="Corrientes" />
+          <Chip color="violet" province="EntreRíos" />
+          <Chip color="orange" province="Córdoba" />
 
-        <Chip color="red" province="LaRioja" />
-        <Chip color="blue" province="SanJuan" />
-        <Chip color="yellow" province="Mendoza" />
-        <Chip color="green" province="SanLuis" />
-        <Chip color="violet" province="LaPampa" />
-        <Chip color="orange" province="BuenosAires" />
+          <Chip color="red" province="LaRioja" />
+          <Chip color="blue" province="SanJuan" />
+          <Chip color="yellow" province="Mendoza" />
+          <Chip color="green" province="SanLuis" />
+          <Chip color="violet" province="LaPampa" />
+          <Chip color="orange" province="BuenosAires" />
 
-        <Chip color="red" province="CABA" />
-        <Chip color="blue" province="BandaOriental" />
-        <Chip color="yellow" province="Neuquén" />
-        <Chip color="green" province="RíoNegro" />
-        <Chip color="violet" province="Chubut" />
-        <Chip color="orange" province="SantaCruz" />
+          <Chip color="red" province="CABA" />
+          <Chip color="blue" province="BandaOriental" />
+          <Chip color="yellow" province="Neuquén" />
+          <Chip color="green" province="RíoNegro" />
+          <Chip color="violet" province="Chubut" />
+          <Chip color="orange" province="SantaCruz" />
 
-        <Chip color="red" province="TierraDelFuego" />
-        <Chip color="blue" province="IslasMalvinas" />
-
-        <ReactResizeDetector handleWidth onResize={this.onResize} />
-        <ImageMapper
-          src={map}
-          map={this.map}
-          width={this.state.clientWidth}
-          imgWidth={WidthAbsoluteScale}
-        />
+          <Chip color="red" province="TierraDelFuego" />
+          <Chip color="blue" province="IslasMalvinas" />
+        </div>
+        <div id="dices">
+          <ReactDice
+            numDice={4}
+            rollDone={this.rollDoneCallback}
+            outline
+            faceColor="#0001ff"
+            dotColor="#000100"
+            disableIndividual
+            ref={dice => this.reactDice = dice}
+          />
+          <Button variant="contained" color="primary" onClick={this.rollAll}>
+            roll a dice
+          </Button>
+        </div>
       </div>
     );
   }

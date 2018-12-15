@@ -7,3 +7,10 @@
   width: 50%;
   position: relative;
 }
+#dices{
+  position:fixed; /*El div será ubicado con relación a la pantalla*/
+  left: 50%; /*A la derecha deje un espacio de 0px*/
+  right: 0px; /*A la izquierda deje un espacio de 0px*/
+  bottom:0px; /*Abajo deje un espacio de 0px*/
+  height: 20%; /*alto del div*/
+}
