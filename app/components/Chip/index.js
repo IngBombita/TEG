@@ -29,6 +29,7 @@ export default class Chip extends React.Component {
         role="button"
         tabIndex="0"
         id={`chip${this.props.province}`}
+        className="chipDiv"
       >
         <svg
           height="100%"
