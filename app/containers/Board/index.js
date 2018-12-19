@@ -9,11 +9,10 @@
  * the linting exception.
 */
 import Button from '@material-ui/core/Button';
-
 import ReactResizeDetector from 'react-resize-detector';
 import ImageMapper from 'react-image-mapper';
 import React from 'react';
-import ReactDice from 'react-dice-complete';
+import ViewMyProvinces from '../../components/ViewMyProvinces';
 import 'react-dice-complete/dist/react-dice-complete.css';
 import map from './src/map.png';
 import './src/style.css';
@@ -23,13 +22,35 @@ import * as Centro from './src/polygons/Centro.json';
 import * as Cuyo from './src/polygons/Cuyo.json';
 import * as Patagonia from './src/polygons/Patagonia.json';
 import Chip from '../../components/Chip/index';
+import SeeMyGlobalGoal from '../../components/SeeMyGlobalGoal/index';
+import RenderDices from '../../components/RenderDices';
 
 const WidthAbsoluteScale = 1064;
-const HeightAbsoluteScale = 2160;
 
 export default class HomePage extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = { clientWidth: 0, availableArmies: 3 };
+
+    this.objPrueba = {
+      cards: [
+        { name: 'cordoba', type: 'tank' },
+        { name: 'mendoza', type: 'hot-air-balloon' },
+        { name: 'salta', type: 'boat' },
+        { name: 'tucuman', type: 'boat' },
+        { name: 'tucuman', type: 'boat' },
+        { name: 'tucuman', type: 'boat' },
+        { name: 'cordoba', type: 'tank' },
+        { name: 'tucuman', type: 'boat' },
+        { name: 'tucuman', type: 'boat' },
+        { name: 'mendoza', type: 'hot-air-balloon' },
+        { name: 'cordoba', type: 'tank' },
+        { name: 'mendoza', type: 'hot-air-balloon' },
+        { name: 'tucuman', type: 'boat' },
+        { name: 'tucuman', type: 'boat' },
+      ],
+    };
 
     this.areas = [];
     this.areas.push(Noroeste.default);
@@ -38,14 +59,13 @@ export default class HomePage extends React.Component {
     this.areas.push(Cuyo.default);
     this.areas.push(Patagonia.default);
 
-    this.state = { clientWidth: 0 };
-
     this.provinces = {};
     for (let i = 0; i < this.areas.length; i += 1) {
       this.provinces = { ...this.provinces, ...this.areas[i] };
     }
 
     this.provinces = Object.entries(this.provinces);
+    this.personalGoal = 'insert the personal goal here';
 
     this.map = {
       name: 'Provinces',
@@ -70,17 +90,21 @@ export default class HomePage extends React.Component {
     console.log(event);
   };
 
-  rollAll = () => {
-    this.reactDice.rollAll()
+  handleChecked = check => {
+    console.log(check);
   };
 
-  rollDoneCallback = num => {
-    console.log(`You rolled a ${num}`);
+  handleClick = () =>{
+    this.RenderDices.rollAllDices();
+  };
+
+  algo = prp => {
+    console.log(prp);
   };
 
   render() {
     return (
-      <div>
+      <div id="back">
         <div
           onClick={this.onMapClick}
           onKeyDown={() => {}}
@@ -96,51 +120,47 @@ export default class HomePage extends React.Component {
             imgWidth={WidthAbsoluteScale}
             onClick={this.onClickInMap}
           />
-          <Chip color="red" province="Jujuy" />
-          <Chip color="blue" province="Salta" />
-          <Chip color="yellow" province="Misiones" />
-          <Chip color="green" province="Tucumán" />
-          <Chip color="violet" province="Catamarca" />
-          <Chip color="orange" province="Santiago" />
-
-          <Chip color="red" province="Formosa" />
-          <Chip color="blue" province="Chaco" />
-          <Chip color="yellow" province="SantaFé" />
-          <Chip color="green" province="Corrientes" />
-          <Chip color="violet" province="EntreRíos" />
-          <Chip color="orange" province="Córdoba" />
-
-          <Chip color="red" province="LaRioja" />
-          <Chip color="blue" province="SanJuan" />
-          <Chip color="yellow" province="Mendoza" />
-          <Chip color="green" province="SanLuis" />
-          <Chip color="violet" province="LaPampa" />
-          <Chip color="orange" province="BuenosAires" />
-
-          <Chip color="red" province="CABA" />
-          <Chip color="blue" province="BandaOriental" />
-          <Chip color="yellow" province="Neuquén" />
-          <Chip color="green" province="RíoNegro" />
-          <Chip color="violet" province="Chubut" />
-          <Chip color="orange" province="SantaCruz" />
-
-          <Chip color="red" province="TierraDelFuego" />
-          <Chip color="blue" province="IslasMalvinas" />
         </div>
+
         <div id="dices">
-          <ReactDice
-            numDice={4}
-            rollDone={this.rollDoneCallback}
-            outline
-            faceColor="#0001ff"
-            dotColor="#000100"
-            disableIndividual
-            ref={dice => this.reactDice = dice}
+          <RenderDices
+            availableArmies={this.state.availableArmies}
+            ref={RenderDices => (this.RenderDices = RenderDices)}
+            whenRoll={this.algo}
           />
-          <Button variant="contained" color="primary" onClick={this.rollAll}>
-            roll a dice
+          <div id="buttonDice">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.handleClick}
+            >
+              Tirar los dados
+            </Button>
+          </div>
+        </div>
+
+        <div id="myProvinces">
+          <h3 id="p">Mis Tarjetas de Provincias</h3>
+          <ViewMyProvinces
+            button
+            focusVisible
+            obj={this.objPrueba}
+            whenChecking={this.handleChecked}
+          />
+          <Button variant="contained" color="secondary">
+            Canjear Por Ejercitos
           </Button>
         </div>
+        <div id="globalGoal">
+          <SeeMyGlobalGoal
+            title="Objetivo Global"
+            body="Conquistar 16 Provincias"
+          />
+        </div>
+        <div id="personalGoal">
+          <SeeMyGlobalGoal title="Objetivo Personal" body={this.personalGoal} />
+        </div>
+        <div id="chat" />
       </div>
     );
   }

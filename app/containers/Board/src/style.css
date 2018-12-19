@@ -8,9 +8,66 @@
   position: relative;
 }
 #dices{
-  position:fixed; /*El div será ubicado con relación a la pantalla*/
-  left: 50%; /*A la derecha deje un espacio de 0px*/
-  right: 0px; /*A la izquierda deje un espacio de 0px*/
-  bottom:0px; /*Abajo deje un espacio de 0px*/
-  height: 20%; /*alto del div*/
+  position:fixed;
+  left: 50%;
+  right: 15%;
+  bottom:0px; 
+  height: 10%; 
+  display:block;
 }
+#buttonDice{
+  position:fixed;
+  left: 66.5%;
+  right: 25%;
+  bottom:0px; 
+  height: 4%; 
+  top: 93%;
+  display:block;
+}
+#myProvinces{
+  position: fixed;
+  left: 50%;
+  right: 31%;
+  bottom:0px;
+  height: 85%;
+  display:block;
+  top: 0%;  
+}
+#p {
+  margin: 0%;
+}
+#globalGoal{
+  position: fixed;
+  left: 69.1%;
+  right: 0.1%;
+  bottom:0px;
+  height: 12%;
+  display:block;
+  top: 3%;  
+}
+#personalGoal{
+  position: fixed;
+  left: 69.1%;
+  right: 0.1%;
+  bottom:0px;
+  height: 9%;
+  display:block;
+  top: 12%;  
+}
+#back{
+  background-color: bisque;
+}
+#chat{
+  position: fixed;
+  left: 69.1%;
+  right: 0.1%;
+  bottom:0px;
+  height: 62.4%;
+  display:block;
+  top: 27.5%; 
+}
+
+
+
+  
+  
