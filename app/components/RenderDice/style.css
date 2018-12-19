@@ -1,4 +1,4 @@
-#dice1{
+#die1{
     position:fixed;
     left: 50%;
     right: 44%;
@@ -6,7 +6,7 @@
     top: 90%;
     display:block;
 }
-#dice2{
+#die2{
     position:fixed;
     left: 55%;
     right: 49%;
@@ -14,7 +14,7 @@
     top: 90%;
     display:block;
 }
-#dice3{
+#die3{
     position:fixed;
     left: 60%;
     right: 54%;

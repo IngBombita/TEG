@@ -7,7 +7,7 @@
   width: 50%;
   position: relative;
 }
-#dices{
+#dice{
   position:fixed;
   left: 50%;
   right: 15%;
@@ -69,5 +69,4 @@
 
 
 
-  
   

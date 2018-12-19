@@ -12,7 +12,7 @@ import Button from '@material-ui/core/Button';
 import ReactResizeDetector from 'react-resize-detector';
 import ImageMapper from 'react-image-mapper';
 import React from 'react';
-import ViewMyProvinces from '../../components/ViewMyProvinces';
+import MyCards from '../../components/MyCards';
 import 'react-dice-complete/dist/react-dice-complete.css';
 import map from './src/map.png';
 import './src/style.css';
@@ -22,16 +22,17 @@ import * as Centro from './src/polygons/Centro.json';
 import * as Cuyo from './src/polygons/Cuyo.json';
 import * as Patagonia from './src/polygons/Patagonia.json';
 import Chip from '../../components/Chip/index';
-import SeeMyGlobalGoal from '../../components/SeeMyGlobalGoal/index';
-import RenderDices from '../../components/RenderDices';
+import Objectives from '../../components/Objectives/index';
+import RenderDice from '../../components/RenderDice';
 
 const WidthAbsoluteScale = 1064;
+const borderSize = 7;
 
 export default class HomePage extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { clientWidth: 0, availableArmies: 3 };
+    this.state = { clientWidth: 0, availableArmies: 3, color: 'BLACK' };
 
     this.objPrueba = {
       cards: [
@@ -65,7 +66,7 @@ export default class HomePage extends React.Component {
     }
 
     this.provinces = Object.entries(this.provinces);
-    this.personalGoal = 'insert the personal goal here';
+    this.personalGoal = 'Insert the personal goal here';
 
     this.map = {
       name: 'Provinces',
@@ -94,11 +95,11 @@ export default class HomePage extends React.Component {
     console.log(check);
   };
 
-  handleClick = () =>{
-    this.RenderDices.rollAllDices();
+  handleClick = () => {
+    this.RenderDice.rollAllDice();
   };
 
-  algo = prp => {
+  handleRoll = prp => {
     console.log(prp);
   };
 
@@ -119,14 +120,16 @@ export default class HomePage extends React.Component {
             width={this.state.clientWidth}
             imgWidth={WidthAbsoluteScale}
             onClick={this.onClickInMap}
+            strokeColor={this.state.color}
+            lineWidth={borderSize}
           />
         </div>
 
-        <div id="dices">
-          <RenderDices
+        <div id="dice">
+          <RenderDice
             availableArmies={this.state.availableArmies}
-            ref={RenderDices => (this.RenderDices = RenderDices)}
-            whenRoll={this.algo}
+            ref={RenderDice => (this.RenderDice = RenderDice)}
+            whenRoll={this.handleRoll}
           />
           <div id="buttonDice">
             <Button
@@ -141,7 +144,7 @@ export default class HomePage extends React.Component {
 
         <div id="myProvinces">
           <h3 id="p">Mis Tarjetas de Provincias</h3>
-          <ViewMyProvinces
+          <MyCards
             button
             focusVisible
             obj={this.objPrueba}
@@ -152,13 +155,13 @@ export default class HomePage extends React.Component {
           </Button>
         </div>
         <div id="globalGoal">
-          <SeeMyGlobalGoal
+          <Objectives
             title="Objetivo Global"
             body="Conquistar 16 Provincias"
           />
         </div>
         <div id="personalGoal">
-          <SeeMyGlobalGoal title="Objetivo Personal" body={this.personalGoal} />
+          <Objectives title="Objetivo Personal" body={this.personalGoal} />
         </div>
         <div id="chat" />
       </div>

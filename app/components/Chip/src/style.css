@@ -10,7 +10,7 @@
 #chipMendoza, #chipCABA, #chipChaco {
   width: 2.2%;
   height: 1.2%;
-
+  z-index: 2;
   position: absolute;
   background-color: transparent;
   border: none;

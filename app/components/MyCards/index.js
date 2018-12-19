@@ -12,6 +12,7 @@ import ImgBoat from './images/boat.png';
 import ImgTank from './images/tank2.jpg';
 import ImgHotAirBalloon from './images/hot-air balloon2.jpg';
 
+const imageEmpty = 0;
 const styles = theme => ({
   root: {
     width: '100%',
@@ -20,10 +21,10 @@ const styles = theme => ({
   },
 });
 
-class CheckboxListSecondary extends React.Component {
+class MyCards extends React.Component {
   constructor(props) {
     super(props);
-    this.img = 0;
+    this.img = imageEmpty;
   }
 
   state = {
@@ -69,7 +70,7 @@ class CheckboxListSecondary extends React.Component {
               break;
           }
           return (
-            <div key={index}>
+            <div key={value.name}>
               <ListItem button>
                 <ListItemAvatar>
                   <Avatar alt="Province Name" src={this.img} />
@@ -90,9 +91,9 @@ class CheckboxListSecondary extends React.Component {
   }
 }
 
-CheckboxListSecondary.propTypes = {
+MyCards.propTypes = {
   classes: PropTypes.object.isRequired,
   obj: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CheckboxListSecondary);
+export default withStyles(styles)(MyCards);
