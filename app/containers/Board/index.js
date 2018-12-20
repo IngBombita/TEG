@@ -8,6 +8,16 @@
  * reloading is not a necessity for you then you can refactor it and remove
  * the linting exception.
 */
+
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
+
+import injectReducer from 'utils/injectReducer';
+
+import { connect } from 'react-redux';
+
+import PropTypes from 'prop-types';
+
 import Button from '@material-ui/core/Button';
 
 import ReactResizeDetector from 'react-resize-detector';
@@ -24,10 +34,15 @@ import * as Cuyo from './src/polygons/Cuyo.json';
 import * as Patagonia from './src/polygons/Patagonia.json';
 import Chip from '../../components/Chip/index';
 
+import makeSelectBoard from './selectors';
+
+import { placeChip } from './actions';
+import boardReducer from './reducer';
+
 const WidthAbsoluteScale = 1064;
 const HeightAbsoluteScale = 2160;
 
-export default class HomePage extends React.Component {
+class Board extends React.Component {
   constructor(props) {
     super(props);
 
@@ -60,6 +75,10 @@ export default class HomePage extends React.Component {
       };
       this.map.areas[index] = objProvince;
     }
+
+    console.log("Dispatch: " + this.props.dispatch);
+    console.log("Board:");
+    console.log(this.props.board);
   }
 
   onResize = width => {
@@ -67,7 +86,11 @@ export default class HomePage extends React.Component {
   };
 
   onClickInMap = event => {
+    const province = event.name;
     console.log(event);
+    console.log(`${province} seleccionada.`);
+
+    this.props.dispatch(placeChip(province, 1));
   };
 
   rollAll = () => {
@@ -76,6 +99,21 @@ export default class HomePage extends React.Component {
 
   rollDoneCallback = num => {
     console.log(`You rolled a ${num}`);
+  };
+
+  renderChips = () => {
+    const chipComponents = [];
+    const boardChips = this.props.board.chips;
+
+    if (!this.props.board.chips) return <span />;
+
+    for (let i = 0; i < boardChips.length; i += 1) {
+      const { province } = boardChips[i];
+      chipComponents.push(
+        <Chip key={province} province={province} color="red" />,
+      );
+    }
+    return chipComponents;
   };
 
   render() {
@@ -96,37 +134,7 @@ export default class HomePage extends React.Component {
             imgWidth={WidthAbsoluteScale}
             onClick={this.onClickInMap}
           />
-          <Chip color="red" province="Jujuy" />
-          <Chip color="blue" province="Salta" />
-          <Chip color="magenta" province="Misiones" />
-          <Chip color="green" province="Tucuman" />
-          <Chip color="black" province="Catamarca" />
-          <Chip color="orange" province="Santiago" />
-
-          <Chip color="red" province="Formosa" />
-          <Chip color="blue" province="Chaco" />
-          <Chip color="magenta" province="SantaFe" />
-          <Chip color="green" province="Corrientes" />
-          <Chip color="black" province="EntreRios" />
-          <Chip color="orange" province="Cordoba" />
-
-          <Chip color="red" province="LaRioja" />
-          <Chip color="blue" province="SanJuan" />
-          <Chip color="magenta" province="Mendoza" />
-          <Chip color="green" province="SanLuis" />
-          <Chip color="black" province="LaPampa" />
-          <Chip color="orange" province="BuenosAires" />
-
-          <Chip color="red" province="CABA" />
-          <Chip color="blue" province="BandaOriental" />
-          <Chip color="magenta" province="Neuquen" />
-          <Chip color="green" province="RioNegro" />
-          <Chip color="black" province="Chubut" />
-          <Chip color="orange" province="SantaCruz" />
-
-          <Chip color="red" province="TierraDelFuego" />
-          <Chip color="blue" province="IslaGranMalvina" />
-          <Chip color="green" province="IslaSoledad" />
+          {this.renderChips()}
         </div>
         <div id="dices">
           <ReactDice
@@ -146,3 +154,28 @@ export default class HomePage extends React.Component {
     );
   }
 }
+Board.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  board: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = createStructuredSelector({
+  board: makeSelectBoard(),
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+const withReducer = injectReducer({ key: 'board', reducer: boardReducer });
+
+export default compose(
+  withReducer,
+  withConnect,
+)(Board);
