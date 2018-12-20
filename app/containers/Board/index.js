@@ -34,7 +34,7 @@ import * as Cuyo from './src/polygons/Cuyo.json';
 import * as Patagonia from './src/polygons/Patagonia.json';
 import Chip from '../../components/Chip/index';
 
-import makeSelectBoard from './selectors';
+import { makeSelectBoard, makeSelectChips } from './selectors';
 
 import { placeChip } from './actions';
 import boardReducer from './reducer';
@@ -75,10 +75,6 @@ class Board extends React.Component {
       };
       this.map.areas[index] = objProvince;
     }
-
-    console.log("Dispatch: " + this.props.dispatch);
-    console.log("Board:");
-    console.log(this.props.board);
   }
 
   onResize = width => {
@@ -103,9 +99,9 @@ class Board extends React.Component {
 
   renderChips = () => {
     const chipComponents = [];
-    const boardChips = this.props.board.chips;
+    const boardChips = this.props.chips;
 
-    if (!this.props.board.chips) return <span />;
+    if (!boardChips) return <span />;
 
     for (let i = 0; i < boardChips.length; i += 1) {
       const { province } = boardChips[i];
@@ -156,11 +152,11 @@ class Board extends React.Component {
 }
 Board.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  board: PropTypes.object.isRequired,
+  chips: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  board: makeSelectBoard(),
+  chips: makeSelectChips(),
 });
 
 function mapDispatchToProps(dispatch) {

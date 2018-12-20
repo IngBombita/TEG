@@ -3,8 +3,7 @@ import { initialState } from './reducer';
 
 const selectBoardDomain = state => state.get('board', initialState);
 
-const makeSelectBoard = () =>
-  createSelector(selectBoardDomain, substate => substate.toJS());
+const makeSelectChips = () =>
+  createSelector(selectBoardDomain, substate => substate.get('chips').toJS());
 
-export default makeSelectBoard;
-export { selectBoardDomain };
+export { makeSelectChips };
