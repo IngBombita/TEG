@@ -32,23 +32,13 @@ export default class HomePage extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { clientWidth: 0, availableArmies: 3, color: 'BLACK' };
+    this.state = { clientWidth: 0, availableArmies: 3, color: 'BLACK',randomNumbers:[3,3,3] };
 
     this.objPrueba = {
       cards: [
         { name: 'cordoba', type: 'tank' },
         { name: 'mendoza', type: 'hot-air-balloon' },
         { name: 'salta', type: 'boat' },
-        { name: 'tucuman', type: 'boat' },
-        { name: 'tucuman', type: 'boat' },
-        { name: 'tucuman', type: 'boat' },
-        { name: 'cordoba', type: 'tank' },
-        { name: 'tucuman', type: 'boat' },
-        { name: 'tucuman', type: 'boat' },
-        { name: 'mendoza', type: 'hot-air-balloon' },
-        { name: 'cordoba', type: 'tank' },
-        { name: 'mendoza', type: 'hot-air-balloon' },
-        { name: 'tucuman', type: 'boat' },
         { name: 'tucuman', type: 'boat' },
       ],
     };
@@ -130,6 +120,7 @@ export default class HomePage extends React.Component {
             availableArmies={this.state.availableArmies}
             ref={RenderDice => (this.RenderDice = RenderDice)}
             whenRoll={this.handleRoll}
+            randomNumbers={this.state.randomNumbers}
           />
           <div id="buttonDice">
             <Button

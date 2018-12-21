@@ -3,7 +3,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable object-shorthand */
 import React from 'react';
-import Dice from 'react-dice-complete';
+import Dice from '../../components/Dice/Dice';
 import './style.css';
 
 const numberOfDie1 = 0;
@@ -63,9 +63,9 @@ export default class RenderDice extends React.Component {
 
   rollAllDice = () => {
     this.values = [];
-    this.reactDice.rollAll();
-    this.reactDice1.rollAll();
-    this.reactDice2.rollAll();
+    this.reactDice.rollAll(this.props.randomNumbers[numberOfDie1]);
+    this.reactDice1.rollAll(this.props.randomNumbers[numberOfDie2]);
+    this.reactDice2.rollAll(this.props.randomNumbers[numberOfDie3]);
   };
 
   render() {
