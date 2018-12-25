@@ -4,13 +4,6 @@ import PropTypes from 'prop-types';
 import './src/style.css';
 
 export default class Chip extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      armies: 0,
-    };
-  }
-
   componentDidMount() {
     window.addEventListener('resize', this.updateDimensions);
   }
@@ -47,7 +40,7 @@ export default class Chip extends React.Component {
             fill={this.props.color}
           />
           <text x="2" y="8" fontSize="10" fill="white">
-            {this.state.armies}
+            {this.props.armies}
           </text>
         </svg>
       </div>
@@ -58,4 +51,5 @@ export default class Chip extends React.Component {
 Chip.propTypes = {
   color: PropTypes.string.isRequired,
   province: PropTypes.string.isRequired,
+  armies: PropTypes.number.isRequired,
 };

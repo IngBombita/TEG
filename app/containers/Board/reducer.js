@@ -1,18 +1,55 @@
-import { fromJS } from 'immutable';
+import { List, Map } from 'immutable';
 
-import { PLACE_CHIP } from './actions';
+import { SET_CHIP } from './actions';
 
-export const initialState = fromJS({
-  chips: [],
+import combineReducers from '../../utils/custom/combineReducers';
+
+const initialChipsState = List([]);
+export const initialState = Map({
+  chips: initialChipsState,
 });
 
-function boardReducer(state = initialState, action) {
+function chipsReducer(state = initialChipsState, action) {
   switch (action.type) {
-    case PLACE_CHIP:
-      return state.set('chips', state.get('chips').push(action.data));
+    case SET_CHIP: {
+      const foundProvIndex = searchProvinceChipIndex(
+        state,
+        action.data.province,
+      );
+
+      if (foundProvIndex >= 0)
+        return updateProvinceChip(state, action.data, foundProvIndex);
+
+      return addNewProvinceChip(state, action.data);
+    }
     default:
       return state;
   }
 }
 
-export default boardReducer;
+function searchProvinceChipIndex(stateChipsArray, province) {
+  const foundProvinceChipIndex = stateChipsArray.findIndex(
+    chip => chip.province === province,
+  );
+
+  if (foundProvinceChipIndex) return foundProvinceChipIndex;
+  return null;
+}
+function updateProvinceChip(state, data, index) {
+  return state.update(index, () => data);
+}
+function addNewProvinceChip(state, data) {
+  return state.push(data);
+}
+
+export default (state = initialState, action) =>
+  combineReducers(
+    state,
+    action,
+    List([
+      Map({
+        key: 'chips',
+        reducer: chipsReducer,
+      }),
+    ]),
+  );

@@ -34,17 +34,19 @@ import * as Cuyo from './src/polygons/Cuyo.json';
 import * as Patagonia from './src/polygons/Patagonia.json';
 import Chip from '../../components/Chip/index';
 
-import { makeSelectBoard, makeSelectChips } from './selectors';
+import { makeSelectChips } from './selectors';
 
-import { placeChip } from './actions';
+import { setChip } from './actions';
 import boardReducer from './reducer';
 
 const WidthAbsoluteScale = 1064;
-const HeightAbsoluteScale = 2160;
+// const HeightAbsoluteScale = 2160;
 
 class Board extends React.Component {
   constructor(props) {
     super(props);
+
+    this.colors = ['red', 'green', 'blue', 'orange', 'magenta', 'black'];
 
     this.areas = [];
     this.areas.push(Noroeste.default);
@@ -86,7 +88,7 @@ class Board extends React.Component {
     console.log(event);
     console.log(`${province} seleccionada.`);
 
-    this.props.dispatch(placeChip(province, 1));
+    this.props.dispatch(setChip(province, 1, 1));
   };
 
   rollAll = () => {
@@ -103,12 +105,19 @@ class Board extends React.Component {
 
     if (!boardChips) return <span />;
 
-    for (let i = 0; i < boardChips.length; i += 1) {
-      const { province } = boardChips[i];
+    boardChips.forEach(value => {
+      const { province, player, armies } = value;
+
       chipComponents.push(
-        <Chip key={province} province={province} color="red" />,
+        <Chip
+          key={province}
+          province={province}
+          color={this.colors[player]}
+          armies={armies}
+        />,
       );
-    }
+    });
+
     return chipComponents;
   };
 
@@ -140,7 +149,9 @@ class Board extends React.Component {
             faceColor="#0001ff"
             dotColor="#000100"
             disableIndividual
-            ref={dice => this.reactDice = dice}
+            ref={dice => {
+              this.reactDice = dice;
+            }}
           />
           <Button variant="contained" color="primary" onClick={this.rollAll}>
             Tira los dados
@@ -152,7 +163,7 @@ class Board extends React.Component {
 }
 Board.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  chips: PropTypes.array.isRequired,
+  chips: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
