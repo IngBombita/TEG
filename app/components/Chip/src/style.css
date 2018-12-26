@@ -1,13 +1,18 @@
+/* Añadido por Nico */
+#dices {
+  position: fixed; /* El div será ubicado con relación a la pantalla */
+  left: 50%; /* A la derecha dejé un espacio de 0px */
+  right: 0px; /* A la izquierda dejé un esacio de 0px */
+  bottom: 0px; /* Abajo dejé un espacio de 0px */
+  height: 20%; /* Alto del div */
+}
+
 .chip {
   object-fit: contain;
   position: absolute;
 }
 
-#chipJujuy, #chipSalta, #chipSantiago, #chipTucumán, #chipMisiones, #chipCorrientes,
-#chipCórdoba, #chipSanJuan, #chipSanLuis, #chipBuenosAires, #chipEntreRíos, #chipSantaFé,
-#chipLaPampa, #chipFormosa, #chipRíoNegro, #chipNeuquén, #chipChubut, #chipSantaCruz,
-#chipTierraDelFuego, #chipIslasMalvinas, #chipBandaOriental, #chipLaRioja, #chipCatamarca,
-#chipMendoza, #chipCABA, #chipChaco {
+.chipDiv {
   width: 2.2%;
   height: 1.2%;
   z-index: 2;
@@ -15,6 +20,7 @@
   background-color: transparent;
   border: none;
 }
+
 #chipJujuy {
   left: 30%;
   top: 4%;
@@ -35,7 +41,7 @@
   left: 45%;
   top: 16%;
 }
-#chipTucumán {
+#chipTucuman {
   left: 33%;
   top: 16%;
 }
@@ -51,11 +57,11 @@
   left: 16%;
   top: 28%;
 }
-#chipCórdoba {
+#chipCordoba {
   left: 41%;
   top: 28%;
 }
-#chipSantaFé {
+#chipSantaFe {
   left: 57%;
   top: 26%;
 }
@@ -67,7 +73,7 @@
   left: 94%;
   top: 17%;
 }
-#chipEntreRíos {
+#chipEntreRios {
   left: 64%;
   top: 31%;
 }
@@ -91,11 +97,11 @@
   left: 34%;
   top: 45%;
 }
-#chipNeuquén {
+#chipNeuquen {
   left: 12%;
   top: 49%;
 }
-#chipRíoNegro {
+#chipRioNegro {
   left: 28%;
   top: 55%;
 }
@@ -111,11 +117,17 @@
   left: 31%;
   top: 97%;
 }
-#chipIslasMalvinas {
-  left: 59%;
+
+#chipIslaGranMalvina {
+  left: 55%;
   top: 88%;
 }
+#chipIslaSoledad {
+  left: 61%;
+  top: 88%;
+}
+
 #chipBandaOriental {
   left: 78%;
-  top: 39%;
+  top: 33%;
 }
