@@ -96,7 +96,6 @@ export default class HomePage extends React.Component {
   render() {
     return (
       <div id="back">
-      <div>
         <div
           onClick={this.onMapClick}
           onKeyDown={() => {}}
@@ -180,10 +179,7 @@ export default class HomePage extends React.Component {
           </Button>
         </div>
         <div id="globalGoal">
-          <Objectives
-            title="Objetivo Global"
-            body="Conquistar 16 Provincias"
-          />
+          <Objectives title="Objetivo Global" body="Conquistar 16 Provincias" />
         </div>
         <div id="personalGoal">
           <Objectives title="Objetivo Personal" body={this.personalGoal} />
