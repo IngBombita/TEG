@@ -19,11 +19,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
-
 import ReactResizeDetector from 'react-resize-detector';
 import ImageMapper from 'react-image-mapper';
 import React from 'react';
-import ReactDice from 'react-dice-complete';
+import MyCards from '../../components/MyCards';
 import 'react-dice-complete/dist/react-dice-complete.css';
 import map from './src/map.png';
 import './src/style.css';
@@ -33,6 +32,8 @@ import * as Centro from './src/polygons/Centro.json';
 import * as Cuyo from './src/polygons/Cuyo.json';
 import * as Patagonia from './src/polygons/Patagonia.json';
 import Chip from '../../components/Chip/index';
+import Objectives from '../../components/Objectives/index';
+import RenderDice from '../../components/RenderDice';
 
 import { makeSelectChips } from './selectors';
 
@@ -41,13 +42,24 @@ import boardReducer from './reducer';
 
 const WidthAbsoluteScale = 1064;
 // const HeightAbsoluteScale = 2160;
+const borderSize = 7;
 
 class Board extends React.Component {
   constructor(props) {
     super(props);
 
     this.colors = ['red', 'green', 'blue', 'orange', 'magenta', 'black'];
+    this.state = { clientWidth: 0, availableArmies: 3, color: 'BLACK',randomNumbers:[3,3,3] };
 
+    this.objPrueba = {
+      cards: [
+        { name: 'cordoba', type: 'tank' },
+        { name: 'mendoza', type: 'hot-air-balloon' },
+        { name: 'salta', type: 'boat' },
+        { name: 'tucuman', type: 'boat' },
+      ],
+    };
+    
     this.areas = [];
     this.areas.push(Noroeste.default);
     this.areas.push(Noreste.default);
@@ -55,14 +67,13 @@ class Board extends React.Component {
     this.areas.push(Cuyo.default);
     this.areas.push(Patagonia.default);
 
-    this.state = { clientWidth: 0 };
-
     this.provinces = {};
     for (let i = 0; i < this.areas.length; i += 1) {
       this.provinces = { ...this.provinces, ...this.areas[i] };
     }
 
     this.provinces = Object.entries(this.provinces);
+    this.personalGoal = 'Insert the personal goal here';
 
     this.map = {
       name: 'Provinces',
@@ -91,12 +102,16 @@ class Board extends React.Component {
     this.props.dispatch(setChip(province, 1, 1));
   };
 
-  rollAll = () => {
-    this.reactDice.rollAll();
+  handleChecked = check => {
+    console.log(check);
   };
 
-  rollDoneCallback = num => {
-    console.log(`You rolled a ${num}`);
+  handleClick = () => {
+    this.RenderDice.rollAllDice();
+  };
+
+  handleRoll = prp => {
+    console.log(prp);
   };
 
   renderChips = () => {
@@ -123,7 +138,7 @@ class Board extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="back">
         <div
           onClick={this.onMapClick}
           onKeyDown={() => {}}
@@ -138,24 +153,49 @@ class Board extends React.Component {
             width={this.state.clientWidth}
             imgWidth={WidthAbsoluteScale}
             onClick={this.onClickInMap}
+            strokeColor={this.state.color}
+            lineWidth={borderSize}
           />
-          {this.renderChips()}
+          <div id="chips">
+            {this.renderChips()}
+          </div>
         </div>
-        <div id="dices">
-          <ReactDice
-            numDice={4}
-            rollDone={this.rollDoneCallback}
-            outline
-            faceColor="#0001ff"
-            dotColor="#000100"
-            disableIndividual
-            ref={dice => {
-              this.reactDice = dice;
-            }}
+
+        <div id="dice">
+          <RenderDice
+            availableArmies={this.state.availableArmies}
+            ref={RenderDice => {this.RenderDice = RenderDice}}
+            whenRoll={this.handleRoll}
+            randomNumbers={this.state.randomNumbers}
           />
-          <Button variant="contained" color="primary" onClick={this.rollAll}>
-            Tira los dados
+          <div id="buttonDice">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.handleClick}
+            >
+              Tirar los dados
+            </Button>
+          </div>
+        </div>
+
+        <div id="myProvinces">
+          <h3 id="p">Mis Tarjetas de Provincias</h3>
+          <MyCards
+            button
+            focusVisible
+            obj={this.objPrueba}
+            whenChecking={this.handleChecked}
+          />
+          <Button variant="contained" color="secondary">
+            Canjear Por Ejercitos
           </Button>
+        </div>
+        <div id="globalGoal">
+          <Objectives title="Objetivo Global" body="Conquistar 16 Provincias" />
+        </div>
+        <div id="personalGoal">
+          <Objectives title="Objetivo Personal" body={this.personalGoal} />
         </div>
       </div>
     );

@@ -7,3 +7,66 @@
   width: 50%;
   position: relative;
 }
+#dice{
+  position:fixed;
+  left: 50%;
+  right: 15%;
+  bottom:0px; 
+  height: 10%; 
+  display:block;
+}
+#buttonDice{
+  position:fixed;
+  left: 66.5%;
+  right: 25%;
+  bottom:0px; 
+  height: 4%; 
+  top: 93%;
+  display:block;
+}
+#myProvinces{
+  position: fixed;
+  left: 50%;
+  right: 31%;
+  bottom:0px;
+  height: 85%;
+  display:block;
+  top: 0%;  
+}
+#p {
+  margin: 0%;
+}
+#globalGoal{
+  position: fixed;
+  left: 69.1%;
+  right: 0.1%;
+  bottom:0px;
+  height: 12%;
+  display:block;
+  top: 3%;  
+}
+#personalGoal{
+  position: fixed;
+  left: 69.1%;
+  right: 0.1%;
+  bottom:0px;
+  height: 9%;
+  display:block;
+  top: 12%;  
+}
+#back {
+  background-color: bisque;
+}
+#chat{
+  position: fixed;
+  left: 69.1%;
+  right: 0.1%;
+  bottom:0px;
+  height: 62.4%;
+  display:block;
+  top: 27.5%; 
+}
+
+
+
+  

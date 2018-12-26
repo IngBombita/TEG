@@ -4,14 +4,6 @@ import PropTypes from 'prop-types';
 import './src/style.css';
 
 export default class Chip extends React.Component {
-  componentDidMount() {
-    window.addEventListener('resize', this.updateDimensions);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateDimensions);
-  }
-
   onChipClick = elem => {};
 
   render() {
