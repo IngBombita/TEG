@@ -114,6 +114,39 @@ export default class HomePage extends React.Component {
             strokeColor={this.state.color}
             lineWidth={borderSize}
           />
+          <div id="chips">
+            <Chip color="red" province="Jujuy" />
+            <Chip color="blue" province="Salta" />
+            <Chip color="magenta" province="Misiones" />
+            <Chip color="green" province="Tucuman" />
+            <Chip color="black" province="Catamarca" />
+            <Chip color="orange" province="Santiago" />
+
+            <Chip color="red" province="Formosa" /> 
+            <Chip color="blue" province="Chaco" />
+            <Chip color="magenta" province="SantaFe" />
+            <Chip color="green" province="Corrientes" />
+            <Chip color="black" province="EntreRios" />
+            <Chip color="orange" province="Cordoba" />
+
+            <Chip color="red" province="LaRioja" />
+            <Chip color="blue" province="SanJuan" />
+            <Chip color="magenta" province="Mendoza" />
+            <Chip color="green" province="SanLuis" />
+            <Chip color="black" province="LaPampa" />
+            <Chip color="orange" province="BuenosAires" />
+
+            <Chip color="red" province="CABA" />
+            <Chip color="blue" province="BandaOriental" />
+            <Chip color="magenta" province="Neuquen" />
+            <Chip color="green" province="RioNegro" />
+            <Chip color="black" province="Chubut" />
+            <Chip color="orange" province="SantaCruz" />
+
+            <Chip color="red" province="TierraDelFuego" />
+            <Chip color="blue" province="IslaGranMalvina" />
+            <Chip color="green" province="IslaSoledad" />
+          </div>
         </div>
 
         <div id="dice">
@@ -154,39 +187,6 @@ export default class HomePage extends React.Component {
         </div>
         <div id="personalGoal">
           <Objectives title="Objetivo Personal" body={this.personalGoal} />
-        </div>
-        <div id="chat" />
-          <Chip color="red" province="Jujuy" />
-          <Chip color="blue" province="Salta" />
-          <Chip color="magenta" province="Misiones" />
-          <Chip color="green" province="Tucuman" />
-          <Chip color="black" province="Catamarca" />
-          <Chip color="orange" province="Santiago" />
-
-          <Chip color="red" province="Formosa" />
-          <Chip color="blue" province="Chaco" />
-          <Chip color="magenta" province="SantaFe" />
-          <Chip color="green" province="Corrientes" />
-          <Chip color="black" province="EntreRios" />
-          <Chip color="orange" province="Cordoba" />
-
-          <Chip color="red" province="LaRioja" />
-          <Chip color="blue" province="SanJuan" />
-          <Chip color="magenta" province="Mendoza" />
-          <Chip color="green" province="SanLuis" />
-          <Chip color="black" province="LaPampa" />
-          <Chip color="orange" province="BuenosAires" />
-
-          <Chip color="red" province="CABA" />
-          <Chip color="blue" province="BandaOriental" />
-          <Chip color="magenta" province="Neuquen" />
-          <Chip color="green" province="RioNegro" />
-          <Chip color="black" province="Chubut" />
-          <Chip color="orange" province="SantaCruz" />
-
-          <Chip color="red" province="TierraDelFuego" />
-          <Chip color="blue" province="IslaGranMalvina" />
-          <Chip color="green" province="IslaSoledad" />
         </div>
       </div>
     );
