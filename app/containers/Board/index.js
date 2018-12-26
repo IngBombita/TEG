@@ -49,7 +49,12 @@ class Board extends React.Component {
     super(props);
 
     this.colors = ['red', 'green', 'blue', 'orange', 'magenta', 'black'];
-    this.state = { clientWidth: 0, availableArmies: 3, color: 'BLACK',randomNumbers:[3,3,3] };
+    this.state = {
+      clientWidth: 0,
+      availableArmies: 3,
+      color: 'BLACK',
+      randomNumbers: [1, 6, 2],
+    };
 
     this.objPrueba = {
       cards: [
@@ -59,7 +64,7 @@ class Board extends React.Component {
         { name: 'tucuman', type: 'boat' },
       ],
     };
-    
+
     this.areas = [];
     this.areas.push(Noroeste.default);
     this.areas.push(Noreste.default);
@@ -156,15 +161,15 @@ class Board extends React.Component {
             strokeColor={this.state.color}
             lineWidth={borderSize}
           />
-          <div id="chips">
-            {this.renderChips()}
-          </div>
+          <div id="chips">{this.renderChips()}</div>
         </div>
 
         <div id="dice">
           <RenderDice
             availableArmies={this.state.availableArmies}
-            ref={RenderDice => {this.RenderDice = RenderDice}}
+            ref={dice => {
+              this.RenderDice = dice;
+            }}
             whenRoll={this.handleRoll}
             randomNumbers={this.state.randomNumbers}
           />
