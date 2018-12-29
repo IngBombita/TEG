@@ -11,13 +11,9 @@
 
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-
 import injectReducer from 'utils/injectReducer';
-
 import { connect } from 'react-redux';
-
 import PropTypes from 'prop-types';
-
 import Button from '@material-ui/core/Button';
 import ReactResizeDetector from 'react-resize-detector';
 import ImageMapper from 'react-image-mapper';
@@ -34,9 +30,7 @@ import * as Patagonia from './src/polygons/Patagonia.json';
 import Chip from '../../components/Chip/index';
 import Objectives from '../../components/Objectives/index';
 import RenderDice from '../../components/RenderDice';
-
 import { makeSelectChips } from './selectors';
-
 import { setChip } from './actions';
 import boardReducer from './reducer';
 
@@ -86,12 +80,11 @@ class Board extends React.Component {
     };
     for (let index = 0; index < this.provinces.length; index += 1) {
       const province = this.provinces[index];
-      const objProvince = {
+      this.map.areas[index] = {
         name: province[0],
         shape: 'poly',
         coords: province[1],
       };
-      this.map.areas[index] = objProvince;
     }
   }
 
