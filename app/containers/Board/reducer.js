@@ -1,14 +1,18 @@
-import { List, Map } from 'immutable';
+import { List, Map, fromJS } from 'immutable';
 
-import { SET_CHIP } from './actions';
+import { SET_CHIP, UPDATE_CARDS, UPDATE_DICE } from './actions';
 
 import combineReducers from '../../utils/custom/combineReducers';
 
 const initialChipsState = List([]);
+const initialCardsState = List([]);
+const initialDiceState = List([6, 6, 6]);
+
 export const initialState = Map({
   chips: initialChipsState,
 });
 
+// ===== CHIPS =======
 function chipsReducer(state = initialChipsState, action) {
   switch (action.type) {
     case SET_CHIP: {
@@ -42,6 +46,32 @@ function addNewProvinceChip(state, data) {
   return state.push(data);
 }
 
+// ======== CARDS =========
+const updatePersonalCards = cardsArray => fromJS(cardsArray);
+
+function cardsReducer(state = initialCardsState, action) {
+  switch (action.type) {
+    case UPDATE_CARDS: {
+      return updatePersonalCards(action.data.cards);
+    }
+    default:
+      return state;
+  }
+}
+
+// ====== DICE =====
+const updateDiceNumbers = numbers => fromJS(numbers);
+
+function diceReducer(state = initialDiceState, action) {
+  switch (action.type) {
+    case UPDATE_DICE: {
+      return updateDiceNumbers(action.data.diceNumbers);
+    }
+    default:
+      return state;
+  }
+}
+
 export default (state = initialState, action) =>
   combineReducers(
     state,
@@ -50,6 +80,14 @@ export default (state = initialState, action) =>
       Map({
         key: 'chips',
         reducer: chipsReducer,
+      }),
+      Map({
+        key: 'cards',
+        reducer: cardsReducer,
+      }),
+      Map({
+        key: 'dice',
+        reducer: diceReducer,
       }),
     ]),
   );

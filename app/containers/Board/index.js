@@ -11,6 +11,7 @@
 
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { toJS } from 'immutable';
 
 import injectReducer from 'utils/injectReducer';
 
@@ -35,9 +36,9 @@ import Chip from '../../components/Chip/index';
 import Objectives from '../../components/Objectives/index';
 import RenderDice from '../../components/RenderDice';
 
-import { makeSelectChips } from './selectors';
+import { makeSelectChips, makeSelectCards } from './selectors';
 
-import { setChip } from './actions';
+import { setChip, updateCards } from './actions';
 import boardReducer from './reducer';
 
 const WidthAbsoluteScale = 1064;
@@ -105,6 +106,7 @@ class Board extends React.Component {
     console.log(`${province} seleccionada.`);
 
     this.props.dispatch(setChip(province, 1, 1));
+    this.props.dispatch(updateCards(this.objPrueba.cards));
   };
 
   handleChecked = check => {
@@ -139,6 +141,19 @@ class Board extends React.Component {
     });
 
     return chipComponents;
+  };
+
+  renderCards = () => {
+    const cardsArray = this.props.cards.toJS();
+
+    return (
+      <MyCards
+        button
+        focusVisible
+        obj={{ cards: cardsArray }}
+        whenChecking={this.handleChecked}
+      />
+    );
   };
 
   render() {
@@ -186,12 +201,7 @@ class Board extends React.Component {
 
         <div id="myProvinces">
           <h3 id="p">Mis Tarjetas de Provincias</h3>
-          <MyCards
-            button
-            focusVisible
-            obj={this.objPrueba}
-            whenChecking={this.handleChecked}
-          />
+          {this.renderCards()}
           <Button variant="contained" color="secondary">
             Canjear Por Ejercitos
           </Button>
@@ -209,10 +219,14 @@ class Board extends React.Component {
 Board.propTypes = {
   dispatch: PropTypes.func.isRequired,
   chips: PropTypes.object.isRequired,
+  cards: PropTypes.object.isRequired,
+  diceNumbers: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   chips: makeSelectChips(),
+  cards: makeSelectCards(),
+  diceNumbers: makeSelectDiceNumbers(),
 });
 
 function mapDispatchToProps(dispatch) {
