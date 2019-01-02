@@ -11,7 +11,6 @@
 
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { toJS } from 'immutable';
 
 import injectReducer from 'utils/injectReducer';
 
@@ -36,9 +35,13 @@ import Chip from '../../components/Chip/index';
 import Objectives from '../../components/Objectives/index';
 import RenderDice from '../../components/RenderDice';
 
-import { makeSelectChips, makeSelectCards } from './selectors';
+import {
+  makeSelectChips,
+  makeSelectCards,
+  makeSelectDiceNumbers,
+} from './selectors';
 
-import { setChip, updateCards } from './actions';
+import { setChip, updateCards, updateDice } from './actions';
 import boardReducer from './reducer';
 
 const WidthAbsoluteScale = 1064;
@@ -107,6 +110,7 @@ class Board extends React.Component {
 
     this.props.dispatch(setChip(province, 1, 1));
     this.props.dispatch(updateCards(this.objPrueba.cards));
+    this.props.dispatch(updateDice([1, 2, 3]));
   };
 
   handleChecked = check => {
@@ -186,7 +190,7 @@ class Board extends React.Component {
               this.RenderDice = dice;
             }}
             whenRoll={this.handleRoll}
-            randomNumbers={this.state.randomNumbers}
+            randomNumbers={this.props.diceNumbers}
           />
           <div id="buttonDice">
             <Button

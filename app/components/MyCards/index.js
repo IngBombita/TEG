@@ -25,6 +25,9 @@ class MyCards extends React.Component {
   constructor(props) {
     super(props);
     this.img = imageEmpty;
+    this.state = {
+      checked: [],
+    };
   }
 
   handleToggle = value => () => {
