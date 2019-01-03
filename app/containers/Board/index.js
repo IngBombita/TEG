@@ -53,7 +53,6 @@ class Board extends React.Component {
     this.personalGoal = 'Insert the personal goal here';
 
     this.map = loadProvincesPolygons();
-    this.diceRef = null;
   }
 
   onClickInMap = event => {
@@ -70,13 +69,7 @@ class Board extends React.Component {
     console.log(check);
   };
 
-  bindDiceRef = ref => {
-    this.diceRef = ref;
-  };
-
-  handleClick = () => {
-    this.diceRef.rollAllDice();
-  };
+  onDiceRollFinished = () => {};
 
   render() {
     return (
@@ -89,8 +82,8 @@ class Board extends React.Component {
         <DiceItem
           diceNumbers={this.props.diceNumbers}
           availableDice={this.props.diceAvailable}
-          onRollClick={this.handleClick}
-          diceRefCallback={this.bindDiceRef}
+          onRollFinished={this.onDiceRollFinished}
+          allowDiceRoll
         />
         <CardsItem
           cards={this.props.cards}

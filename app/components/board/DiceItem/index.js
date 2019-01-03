@@ -15,13 +15,22 @@ import './src/style.css';
 
 /* eslint-disable react/prefer-stateless-function */
 class DiceItem extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.diceRef = null;
+  }
+
+  handleDiceRollClick = () => {
+    if (this.props.allowDiceRoll) this.diceRef.rollAllDice();
+  };
+
   render() {
     return (
       <div id="dice">
         <RenderDice
           availableDice={this.props.availableDice}
-          ref={dice => {
-            this.props.diceRefCallback(dice);
+          ref={ref => {
+            this.diceRef = ref;
           }}
           whenRoll={() => {
             if (this.props.onRollFinished) this.props.onRollFinished();
@@ -32,9 +41,7 @@ class DiceItem extends React.PureComponent {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => {
-              if (this.props.onRollClick) this.props.onRollClick();
-            }}
+            onClick={this.handleDiceRollClick}
           >
             Tirar los dados
           </Button>
@@ -47,9 +54,8 @@ class DiceItem extends React.PureComponent {
 DiceItem.propTypes = {
   diceNumbers: PropTypes.object.isRequired,
   availableDice: PropTypes.number.isRequired,
-  diceRefCallback: PropTypes.func.isRequired,
-  onRollClick: PropTypes.func.isRequired,
   onRollFinished: PropTypes.func,
+  allowDiceRoll: PropTypes.bool.isRequired,
 };
 
 export default DiceItem;
