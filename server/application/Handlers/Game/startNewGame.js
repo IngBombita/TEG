@@ -1,3 +1,3 @@
-exports.start = function start(gameOptions){
+exports.start = function start(gameOptions) {
   return gameOptions;
 };
