@@ -21,11 +21,12 @@ export function updateCards(cards) {
 }
 
 export const UPDATE_DICE = 'UPDATE_DICE';
-export function updateDice(diceNumbers) {
+export function updateDice(diceNumbers, availableDice) {
   return {
     type: UPDATE_DICE,
     data: {
       diceNumbers,
+      availableDice,
     },
   };
 }

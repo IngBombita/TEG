@@ -5,7 +5,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Dice from '../../components/Dice/Dice';
+import Dice from '../Dice/Dice';
 import './style.css';
 
 const INDEX_DIE1 = 0;
@@ -33,7 +33,7 @@ export default class RenderDice extends React.Component {
   calculateAvailableDice = () => {
     const dice = [dieDisable, dieDisable, dieDisable];
 
-    for (let army = 0; army < this.props.availableArmies; army += 1) {
+    for (let army = 0; army < this.props.availableDice; army += 1) {
       dice[army] = dieEnable;
     }
     this.setState({ dice: dice });
@@ -55,7 +55,7 @@ export default class RenderDice extends React.Component {
   };
 
   callAppropiateDieCallback = numberOfDie => {
-    if (numberOfDie + 1 === this.props.availableArmies) {
+    if (numberOfDie + 1 === this.props.availableDice) {
       this.sendProperties();
     }
   };
@@ -66,6 +66,8 @@ export default class RenderDice extends React.Component {
 
   rollAllDice = () => {
     this.values = [];
+    this.reactDice.rollAll(1);
+
     this.reactDice.rollAll(this.props.randomNumbers.get(`${INDEX_DIE1}`));
     this.reactDice1.rollAll(this.props.randomNumbers.get(`${INDEX_DIE2}`));
     this.reactDice2.rollAll(this.props.randomNumbers.get(`${INDEX_DIE3}`));
@@ -119,4 +121,5 @@ export default class RenderDice extends React.Component {
 }
 RenderDice.propTypes = {
   randomNumbers: PropTypes.object.isRequired,
+  availableDice: PropTypes.number.isRequired,
 };
