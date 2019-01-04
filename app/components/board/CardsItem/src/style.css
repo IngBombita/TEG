@@ -1,0 +1,30 @@
+#myProvinces{
+  position: fixed;
+  left: 50%;
+  right: 31%;
+  bottom:0px;
+  height: 85%;
+  display:block;
+  top: 0%;  
+}
+#p {
+  margin: 0%;
+}
+#globalGoal{
+  position: fixed;
+  left: 69.1%;
+  right: 0.1%;
+  bottom:0px;
+  height: 12%;
+  display:block;
+  top: 3%;  
+}
+#personalGoal{
+  position: fixed;
+  left: 69.1%;
+  right: 0.1%;
+  bottom:0px;
+  height: 9%;
+  display:block;
+  top: 12%;  
+}

@@ -9,3 +9,24 @@ export function setChip(province, player, armies) {
     },
   };
 }
+
+export const UPDATE_CARDS = 'UPDATE_CARDS';
+export function updateCards(cards) {
+  return {
+    type: UPDATE_CARDS,
+    data: {
+      cards,
+    },
+  };
+}
+
+export const UPDATE_DICE = 'UPDATE_DICE';
+export function updateDice(diceNumbers, availableDice) {
+  return {
+    type: UPDATE_DICE,
+    data: {
+      diceNumbers,
+      availableDice,
+    },
+  };
+}

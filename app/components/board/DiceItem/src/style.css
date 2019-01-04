@@ -1,0 +1,17 @@
+#dice{
+  position:fixed;
+  left: 50%;
+  right: 15%;
+  bottom:0px; 
+  height: 10%; 
+  display:block;
+}
+#buttonDice{
+  position:fixed;
+  left: 66.5%;
+  right: 25%;
+  bottom:0px; 
+  height: 4%; 
+  top: 93%;
+  display:block;
+}

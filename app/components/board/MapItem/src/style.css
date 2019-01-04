@@ -1,0 +1,9 @@
+.map {
+  height: 100%;
+  width: 100%;
+  object-fit: contain
+}
+#mapId{
+  width: 50%;
+  position: relative;
+}  
