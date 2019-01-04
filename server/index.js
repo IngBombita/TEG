@@ -35,6 +35,7 @@ app.get('*.js', (req, res, next) => {
   next();
 });
 
+
 // Start your app.
 app.listen(port, host, async err => {
   if (err) {
@@ -53,4 +54,14 @@ app.listen(port, host, async err => {
   } else {
     logger.appStarted(port, prettyHost);
   }
+
+  // Set up mongoose connection
+  const mongoose = require('mongoose');
+  let dev_db_url = 'mongodb://sanfrancisco:5palomas@ds161459.mlab.com:61459/batallas_provincianas';
+  let mongoDB = process.env.MONGODB_URI || dev_db_url;
+  mongoose.connect(mongoDB);
+  mongoose.Promise = global.Promise;
+  let db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 });
