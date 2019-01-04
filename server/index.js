@@ -1,5 +1,7 @@
 /* eslint consistent-return:0 import/order:0 */
+require('custom-env').env();
 
+const mongoose = require('mongoose');
 const express = require('express');
 const logger = require('./logger');
 const gameApi = require('./infrastructure/routes/router');
@@ -35,7 +37,6 @@ app.get('*.js', (req, res, next) => {
   next();
 });
 
-
 // Start your app.
 app.listen(port, host, async err => {
   if (err) {
@@ -56,12 +57,19 @@ app.listen(port, host, async err => {
   }
 
   // Set up mongoose connection
-  const mongoose = require('mongoose');
-  let dev_db_url = 'mongodb://sanfrancisco:5palomas@ds161459.mlab.com:61459/batallas_provincianas';
-  let mongoDB = process.env.MONGODB_URI || dev_db_url;
-  mongoose.connect(mongoDB);
-  mongoose.Promise = global.Promise;
-  let db = mongoose.connection;
-  db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+  // eslint-disable-next-line prettier/prettier
+  const dbUrl = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}${process.env.DB_HOST}`;
+  console.log(dbUrl);
 
+  mongoose.connect(
+    dbUrl,
+    { useNewUrlParser: true },
+  );
+
+  const db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'connection error:'));
+  db.once('open', () => {
+    // we're connected!
+    console.log('CONECTADO A LA MONGO DB!');
+  });
 });
