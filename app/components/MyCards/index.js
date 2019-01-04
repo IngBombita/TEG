@@ -25,11 +25,10 @@ class MyCards extends React.Component {
   constructor(props) {
     super(props);
     this.img = imageEmpty;
+    this.state = {
+      checked: [],
+    };
   }
-
-  state = {
-    checked: [],
-  };
 
   handleToggle = value => () => {
     const { checked } = this.state;
@@ -53,7 +52,7 @@ class MyCards extends React.Component {
 
     return (
       <List dense className={classes.root}>
-        {this.props.obj.cards.map((value, index) => {
+        {this.props.obj.cards.map(value => {
           switch (value.type) {
             case 'tank':
               this.img = ImgTank;
