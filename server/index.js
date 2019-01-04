@@ -1,5 +1,7 @@
 /* eslint consistent-return:0 import/order:0 */
 
+require('custom-env').env();
+
 const express = require('express');
 const logger = require('./logger');
 

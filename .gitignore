@@ -11,3 +11,6 @@ npm-debug.log
 
 # No package-lock
 package-lock.json
+
+# No .env
+.env
