@@ -12,5 +12,5 @@ npm-debug.log
 # No package-lock
 package-lock.json
 
-# No .env
+# No .env (DB user and password)
 .env

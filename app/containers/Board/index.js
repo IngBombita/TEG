@@ -11,11 +11,8 @@
 
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-
 import injectReducer from 'utils/injectReducer';
-
 import { connect } from 'react-redux';
-
 import PropTypes from 'prop-types';
 
 import React from 'react';
@@ -34,6 +31,7 @@ import {
 } from './selectors';
 
 import { setChip, updateCards, updateDice } from './actions';
+
 import boardReducer from './reducer';
 
 import './src/style.css';

@@ -1,10 +1,10 @@
 /* eslint consistent-return:0 import/order:0 */
-
 require('custom-env').env();
 
+const mongoose = require('mongoose');
 const express = require('express');
 const logger = require('./logger');
-
+const gameApi = require('./infrastructure/routes/router');
 const argv = require('./argv');
 const port = require('./port');
 const setup = require('./middlewares/frontendMiddleware');
@@ -17,7 +17,7 @@ const { resolve } = require('path');
 const app = express();
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
-// app.use('/api', myApi);
+app.use('/api', gameApi);
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
@@ -55,4 +55,21 @@ app.listen(port, host, async err => {
   } else {
     logger.appStarted(port, prettyHost);
   }
+
+  // Set up mongoose connection
+  // eslint-disable-next-line prettier/prettier
+  const dbUrl = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}${process.env.DB_HOST}`;
+  console.log(dbUrl);
+
+  mongoose.connect(
+    dbUrl,
+    { useNewUrlParser: true },
+  );
+
+  const db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'connection error:'));
+  db.once('open', () => {
+    // we're connected!
+    console.log('CONECTADO A LA MONGO DB!');
+  });
 });
