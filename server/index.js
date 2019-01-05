@@ -3,6 +3,7 @@ require('custom-env').env();
 
 const mongoose = require('mongoose');
 const express = require('express');
+const bodyParser = require('body-parser');
 const logger = require('./logger');
 const gameApi = require('./infrastructure/routes/router');
 const argv = require('./argv');
@@ -15,6 +16,9 @@ const ngrok =
     : false;
 const { resolve } = require('path');
 const app = express();
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 app.use('/api', gameApi);

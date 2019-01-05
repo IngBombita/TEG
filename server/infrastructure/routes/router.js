@@ -4,8 +4,8 @@ const gameRoutes = require('./game/routes');
 const roomRoutes = require('./room/routes');
 const lobbyRoutes = require('./lobby/routes');
 
-router.get('/game', gameRoutes);
-router.get('/room', roomRoutes);
-router.get('/lobby', lobbyRoutes);
+router.use('/game', gameRoutes);
+router.use('/room', roomRoutes);
+router.use('/lobby', lobbyRoutes);
 
 module.exports = router;
