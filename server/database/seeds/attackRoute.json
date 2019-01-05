@@ -1,0 +1,218 @@
+[
+  {
+    "node1": "Jujuy",
+    "node2": "Salta"
+  },
+  {
+    "node1": "Jujuy",
+    "node2": "Formosa"
+  },
+  {
+    "node1": "Jujuy",
+    "node2": "Neuquen"
+  },
+  {
+    "node1": "Salta",
+    "node2": "Catamarca"
+  },
+  {
+    "node1": "Salta",
+    "node2": "Tucuman"
+  },
+  {
+    "node1": "Salta",
+    "node2": "Formosa"
+  },
+  {
+    "node1": "Salta",
+    "node2": "Chaco"
+  },
+  {
+    "node1": "Salta",
+    "node2": "SantiagoDelEstero"
+  },
+  {
+    "node1": "Catamarca",
+    "node2": "Tucuman"
+  },
+  {
+    "node1": "Catamarca",
+    "node2": "SantiagoDelEstero"
+  },
+  {
+    "node1": "Catamarca",
+    "node2": "LaRioja"
+  },
+  {
+    "node1": "Tucuman",
+    "node2": "SantiagoDelEstero"
+  },
+  {
+    "node1": "Catamarca",
+    "node2": "Cordoba"
+  },
+  {
+    "node1": "Chaco",
+    "node2": "Formosa"
+  },
+  {
+    "node1": "Chaco",
+    "node2": "SantiagoDelEstero"
+  },
+  {
+    "node1": "Chaco",
+    "node2": "SantaFe"
+  },
+  {
+    "node1": "Chaco",
+    "node2": "Corrientes"
+  },
+  {
+    "node1": "SantiagoDelEstero",
+    "node2": "SantaFe"
+  },
+  {
+    "node1": "SantiagoDelEstero",
+    "node2": "Cordoba"
+  },
+  {
+    "node1": "Cordoba",
+    "node2": "SantaFe"
+  },
+  {
+    "node1": "SantaFe",
+    "node2": "Corrientes"
+  },
+  {
+    "node1": "SantaFe",
+    "node2": "EntreRios"
+  },
+  {
+    "node1": "SantaFe",
+    "node2": "BuenosAires"
+  },
+  {
+    "node1": "Corrientes",
+    "node2": "EntreRios"
+  },
+  {
+    "node1": "Corrientes",
+    "node2": "Misiones"
+  },
+  {
+    "node1": "Cordoba",
+    "node2": "LaRioja"
+  },
+  {
+    "node1": "LaRioja",
+    "node2": "SanJuan"
+  },
+  {
+    "node1": "LaRioja",
+    "node2": "SanLuis"
+  },
+  {
+    "node1": "Cordoba",
+    "node2": "SanLuis"
+  },
+  {
+    "node1": "SanJuan",
+    "node2": "Mendoza"
+  },
+  {
+    "node1": "Mendoza",
+    "node2": "SanLuis"
+  },
+  {
+    "node1": "Cordoba",
+    "node2": "LaPampa"
+  },
+  {
+    "node1": "Cordoba",
+    "node2": "BuenosAires"
+  },
+  {
+    "node1": "EntreRios",
+    "node2": "BuenosAires"
+  },
+  {
+    "node1": "SanLuis",
+    "node2": "LaPampa"
+  },
+  {
+    "node1": "Mendoza",
+    "node2": "LaPampa"
+  },
+  {
+    "node1": "LaPampa",
+    "node2": "BuenosAires"
+  },
+  {
+    "node1": "Mendoza",
+    "node2": "Neuquen"
+  },
+  {
+    "node1": "BuenosAires",
+    "node2": "RioNegro"
+  },
+  {
+    "node1": "LaPampa",
+    "node2": "RioNegro"
+  },
+  {
+    "node1": "Neuquen",
+    "node2": "RioNegro"
+  },
+  {
+    "node1": "SanJuan",
+    "node2": "SanLuis"
+  },
+  {
+    "node1": "RioNegro",
+    "node2": "Chubut"
+  },
+  {
+    "node1": "Chubut",
+    "node2": "SantaCruz"
+  },
+  {
+    "node1": "SantaCruz",
+    "node2": "TierraDelFuego"
+  },
+  {
+    "node1": "EntreRios",
+    "node2": "BandaOriental"
+  },
+  {
+    "node1": "SantaCruz",
+    "node2": "IslaGranMalvina"
+  },
+  {
+    "node1": "IslaGranMalvina",
+    "node2": "IslaSoledad"
+  },
+  {
+    "node1": "IslaSoledad",
+    "node2": "TierraDelFuego"
+  },
+  {
+    "node1": "BandaOriental",
+    "node2": "Misiones"
+  },
+  {
+    "node1": "BandaOriental",
+    "node2": "Corrientes"
+  },
+  {
+    "node1": "Neuquen",
+    "node2": "LaPampa"
+  },
+  {
+    "node1": "Mendoza",
+    "node2": "RioNegro"
+  },
+  {
+    "node1": "BuenosAires",
+    "node2": "BandaOriental"
+  }
+]
