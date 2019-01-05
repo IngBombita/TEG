@@ -37,6 +37,23 @@ app.get('*.js', (req, res, next) => {
   next();
 });
 
+// Set up mongoose connection
+// eslint-disable-next-line prettier/prettier
+const dbUrl = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}${process.env.DB_HOST}`;
+console.log(dbUrl);
+
+mongoose.connect(
+  dbUrl,
+  { useNewUrlParser: true },
+);
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => {
+  // we're connected!
+  console.log('CONECTADO A LA MONGO DB!');
+});
+
 // Start your app.
 app.listen(port, host, async err => {
   if (err) {
@@ -55,21 +72,4 @@ app.listen(port, host, async err => {
   } else {
     logger.appStarted(port, prettyHost);
   }
-
-  // Set up mongoose connection
-  // eslint-disable-next-line prettier/prettier
-  const dbUrl = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}${process.env.DB_HOST}`;
-  console.log(dbUrl);
-
-  mongoose.connect(
-    dbUrl,
-    { useNewUrlParser: true },
-  );
-
-  const db = mongoose.connection;
-  db.on('error', console.error.bind(console, 'connection error:'));
-  db.once('open', () => {
-    // we're connected!
-    console.log('CONECTADO A LA MONGO DB!');
-  });
 });

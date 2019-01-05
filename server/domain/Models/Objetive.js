@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const objetiveSchema = new Schema({
-  id: { type: Number, required: true, unique: true },
   isDestruction: { type: Boolean, required: true },
-  target: [],
+  target: [{ type: Schema.Types.ObjectId, ref: 'province_card' }],
+  players: { type: Number, min: 0, max: 6 },
 });
 
 const Objective = mongoose.model('Objective', objetiveSchema);
