@@ -1,6 +1,6 @@
 require('custom-env').env();
 const mongoose = require('mongoose');
-const objectiveSeeder = require('./ObjectiveSeeder');
+const attackRouteSeeder = require('./AttackRouteSeeder');
 
 const dbUrl = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}${
   process.env.DB_HOST
@@ -19,5 +19,5 @@ db.once('open', () => {
   console.log('CONECTADO A LA MONGO DB!');
 
   // provinceCardSeeder(); --> Ya esta
-  objectiveSeeder();
+  attackRouteSeeder();
 });
