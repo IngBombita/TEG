@@ -21,8 +21,6 @@ import MapItem from '../../components/board/MapItem';
 import DiceItem from '../../components/board/DiceItem';
 import CardsItem from '../../components/board/CardsItem';
 
-import loadProvincesPolygons from './src/loader';
-
 import {
   makeSelectChips,
   makeSelectCards,
@@ -49,8 +47,6 @@ class Board extends React.Component {
       ],
     };
     this.personalGoal = 'Insert the personal goal here';
-
-    this.map = loadProvincesPolygons();
   }
 
   onClickInMap = event => {
@@ -74,7 +70,6 @@ class Board extends React.Component {
       <div id="back">
         <MapItem
           onMapClick={this.onClickInMap}
-          provincesPolygons={this.map}
           chips={this.props.chips}
         />
         <DiceItem
