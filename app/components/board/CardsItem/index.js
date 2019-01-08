@@ -24,7 +24,7 @@ class CardsItem extends React.PureComponent {
         button
         focusVisible
         obj={{ cards: cardsArray }}
-        whenChecking={this.props.onCardChecked}
+        onCardToggle={this.props.onCardToggle}
         checked={this.props.checked}
       />
     );
@@ -54,7 +54,7 @@ class CardsItem extends React.PureComponent {
 CardsItem.propTypes = {
   cards: PropTypes.object.isRequired,
   checked: PropTypes.object.isRequired,
-  onCardChecked: PropTypes.func.isRequired,
+  onCardToggle: PropTypes.func.isRequired,
   onCardsExchange: PropTypes.func.isRequired,
 };
 

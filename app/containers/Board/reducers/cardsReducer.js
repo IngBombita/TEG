@@ -1,4 +1,4 @@
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 import { UPDATE_CARDS, UPDATE_CARDS_CHECKED } from '../actions';
 
 export const initialCardsState = Map({

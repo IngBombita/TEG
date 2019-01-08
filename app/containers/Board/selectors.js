@@ -12,7 +12,8 @@ const makeSelectCardsHand = () =>
   );
 const makeSelectCardsChecked = () =>
   createSelector(selectBoardDomain, substate =>
-    substate.getIn(['cards', 'checked']));
+    substate.getIn(['cards', 'checked']),
+  );
 
 const makeSelectDiceNumbers = () =>
   createSelector(selectBoardDomain, substate =>

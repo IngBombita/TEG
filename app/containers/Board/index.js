@@ -9,6 +9,8 @@
  * the linting exception.
 */
 
+import { toJS } from 'immutable';
+
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
@@ -17,9 +19,9 @@ import PropTypes from 'prop-types';
 
 import React from 'react';
 
-import MapItem from '../../components/board/MapItem';
-import DiceItem from '../../components/board/DiceItem';
-import CardsItem from '../../components/board/CardsItem';
+import MapItem from '../../components/board/MapItem/Loadable';
+import DiceItem from '../../components/board/DiceItem/Loadable';
+import CardsItem from '../../components/board/CardsItem/Loadable';
 
 import {
   makeSelectChips,
@@ -62,8 +64,10 @@ class Board extends React.PureComponent {
     this.props.dispatch(updateDice([1, 2, 3], 3));
   };
 
-  handleCardsCheck = checked => {
-    this.props.dispatch(updateCardsChecked(checked));
+  handleUpdateCardsChecked = checked => {
+    const checkedArray = checked.toJS();
+    
+    this.props.dispatch(updateCardsChecked(checkedArray));
   };
   handleCardsExchange = () => {
     console.log('Exchange button pressed');
@@ -87,7 +91,7 @@ class Board extends React.PureComponent {
         <CardsItem
           cards={this.props.cardsHand}
           checked={this.props.cardsChecked}
-          onCardChecked={this.handleCardsCheck}
+          onCardToggle={this.handleUpdateCardsChecked}
           onCardsExchange={this.handleCardsExchange}
         />
       </div>

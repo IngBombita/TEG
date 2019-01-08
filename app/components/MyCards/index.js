@@ -21,15 +21,28 @@ const styles = theme => ({
   },
 });
 
-class MyCards extends React.Component {
+class MyCards extends React.PureComponent {
   constructor(props) {
     super(props);
     this.img = imageEmpty;
   }
 
-  handleToggle = value => {
-    console.log('toggle', value);
-    // this.props.whenChecking();
+  findCardInChecked = card =>
+    this.props.checked.findIndex(value => value === card.name);
+
+  isChecked = card => {
+    const index = this.findCardInChecked(card);
+
+    if (index === -1) return false;
+    return true;
+  };
+
+  handleCardCheck = card => {
+    const index = this.findCardInChecked(card);
+
+    if (index === -1)
+      this.props.onCardToggle(this.props.checked.push(card.name));
+    else this.props.onCardToggle(this.props.checked.delete(index));
   };
 
   render() {
@@ -62,8 +75,10 @@ class MyCards extends React.Component {
                 <ListItemText primary={value.name} />
                 <ListItemSecondaryAction>
                   <Checkbox
-                    onChange={this.handleToggle(value)}
-                    checked={this.state.checked.indexOf(value) !== -1}
+                    onChange={() => {
+                      this.handleCardCheck(value);
+                    }}
+                    checked={this.isChecked(value)}
                   />
                 </ListItemSecondaryAction>
               </ListItem>
@@ -78,6 +93,8 @@ class MyCards extends React.Component {
 MyCards.propTypes = {
   classes: PropTypes.object.isRequired,
   obj: PropTypes.object.isRequired,
+  checked: PropTypes.object.isRequired,
+  onCardToggle: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(MyCards);
