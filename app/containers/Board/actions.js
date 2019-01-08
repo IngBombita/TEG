@@ -19,6 +19,15 @@ export function updateCards(cards) {
     },
   };
 }
+export const UPDATE_CARDS_CHECKED = 'UPDATE_CARDS_CHECKED';
+export function updateCardsChecked(checked) {
+  return {
+    type: UPDATE_CARDS_CHECKED,
+    data: {
+      checked,
+    },
+  };
+}
 
 export const UPDATE_DICE = 'UPDATE_DICE';
 export function updateDice(diceNumbers, availableDice) {

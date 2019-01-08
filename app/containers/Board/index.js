@@ -23,18 +23,21 @@ import CardsItem from '../../components/board/CardsItem';
 
 import {
   makeSelectChips,
-  makeSelectCards,
+
+  makeSelectCardsHand,
+  makeSelectCardsChecked,
+
   makeSelectDiceNumbers,
   makeSelectDiceAvailable,
 } from './selectors';
 
-import { setChip, updateCards, updateDice } from './actions';
+import { setChip, updateCards, updateDice, updateCardsChecked } from './actions';
 
 import boardReducer from './reducer';
 
 import './src/style.css';
 
-class Board extends React.Component {
+class Board extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -59,8 +62,11 @@ class Board extends React.Component {
     this.props.dispatch(updateDice([1, 2, 3], 3));
   };
 
-  handleChecked = check => {
-    console.log(check);
+  handleCardsCheck = checked => {
+    this.props.dispatch(updateCardsChecked(checked));
+  };
+  handleCardsExchange = () => {
+    console.log('Exchange button pressed');
   };
 
   onDiceRollFinished = () => {};
@@ -79,8 +85,10 @@ class Board extends React.Component {
           allowDiceRoll
         />
         <CardsItem
-          cards={this.props.cards}
-          onCardChecked={this.handleChecked}
+          cards={this.props.cardsHand}
+          checked={this.props.cardsChecked}
+          onCardChecked={this.handleCardsCheck}
+          onCardsExchange={this.handleCardsExchange}
         />
       </div>
     );
@@ -88,15 +96,22 @@ class Board extends React.Component {
 }
 Board.propTypes = {
   dispatch: PropTypes.func.isRequired,
+
   chips: PropTypes.object.isRequired,
-  cards: PropTypes.object.isRequired,
+
+  cardsHand: PropTypes.object.isRequired,
+  cardsChecked: PropTypes.object.isRequired,
+
   diceNumbers: PropTypes.object.isRequired,
   diceAvailable: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   chips: makeSelectChips(),
-  cards: makeSelectCards(),
+
+  cardsHand: makeSelectCardsHand(),
+  cardsChecked: makeSelectCardsChecked(),
+
   diceNumbers: makeSelectDiceNumbers(),
   diceAvailable: makeSelectDiceAvailable(),
 });

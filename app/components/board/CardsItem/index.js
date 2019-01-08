@@ -17,7 +17,7 @@ import './src/style.css';
 /* eslint-disable react/prefer-stateless-function */
 class CardsItem extends React.PureComponent {
   renderCards = () => {
-    const cardsArray = this.props.cards.toJS();
+    const cardsArray = this.props.cards;
 
     return (
       <MyCards
@@ -25,6 +25,7 @@ class CardsItem extends React.PureComponent {
         focusVisible
         obj={{ cards: cardsArray }}
         whenChecking={this.props.onCardChecked}
+        checked={this.props.checked}
       />
     );
   };
@@ -35,7 +36,7 @@ class CardsItem extends React.PureComponent {
         <div id="myProvinces">
           <h3 id="p">Mis Tarjetas de Provincias</h3>
           {this.renderCards()}
-          <Button variant="contained" color="secondary">
+          <Button onClick={this.props.onCardsExchange} variant="contained" color="secondary">
             Canjear Por Ejercitos
           </Button>
         </div>
@@ -52,7 +53,9 @@ class CardsItem extends React.PureComponent {
 
 CardsItem.propTypes = {
   cards: PropTypes.object.isRequired,
+  checked: PropTypes.object.isRequired,
   onCardChecked: PropTypes.func.isRequired,
+  onCardsExchange: PropTypes.func.isRequired,
 };
 
 export default CardsItem;

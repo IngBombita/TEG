@@ -5,8 +5,14 @@ const selectBoardDomain = state => state.get('board', initialState);
 
 const makeSelectChips = () =>
   createSelector(selectBoardDomain, substate => substate.get('chips'));
-const makeSelectCards = () =>
-  createSelector(selectBoardDomain, substate => substate.get('cards'));
+
+const makeSelectCardsHand = () =>
+  createSelector(selectBoardDomain, substate =>
+    substate.getIn(['cards', 'hand']),
+  );
+const makeSelectCardsChecked = () =>
+  createSelector(selectBoardDomain, substate =>
+    substate.getIn(['cards', 'checked']));
 
 const makeSelectDiceNumbers = () =>
   createSelector(selectBoardDomain, substate =>
@@ -19,7 +25,12 @@ const makeSelectDiceAvailable = () =>
 
 export {
   makeSelectChips,
-  makeSelectCards,
+  // eslint-disable-next-line prettier/prettier
+
+  makeSelectCardsHand,
+  makeSelectCardsChecked,
+  // eslint-disable-next-line prettier/prettier
+
   makeSelectDiceNumbers,
   makeSelectDiceAvailable,
 };

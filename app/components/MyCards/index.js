@@ -25,26 +25,11 @@ class MyCards extends React.Component {
   constructor(props) {
     super(props);
     this.img = imageEmpty;
-    this.state = {
-      checked: [],
-    };
   }
 
-  handleToggle = value => () => {
-    const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-    this.setState({
-      checked: newChecked,
-    });
-    // eslint-disable-next-line react/prop-types
-    this.props.whenChecking(newChecked);
+  handleToggle = value => {
+    console.log('toggle', value);
+    // this.props.whenChecking();
   };
 
   render() {
