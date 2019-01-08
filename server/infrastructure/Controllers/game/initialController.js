@@ -1,6 +1,6 @@
 const handler = require('../../../application/Handlers/Game/startNewGame');
 
-exports.startNewGame = function start(req, res) {
+exports.startNewGame = async function start(req, res) {
   const data = req.body;
-  res.json(handler.start(data));
+  res.json(await handler.start(data));
 };
