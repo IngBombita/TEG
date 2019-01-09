@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /**
  *
  * CardsItem
@@ -17,16 +18,38 @@ import './src/style.css';
 /* eslint-disable react/prefer-stateless-function */
 class CardsItem extends React.PureComponent {
   renderCards = () => {
-    const cardsArray = this.props.cards.toJS();
+    const cardsArray = this.props.cards;
 
     return (
       <MyCards
         button
         focusVisible
         obj={{ cards: cardsArray }}
-        whenChecking={this.props.onCardChecked}
+        onCardToggle={this.props.onCardToggle}
+        checked={this.props.checked}
       />
     );
+  };
+
+  checkValidExchange = () => {
+    const { cards, checked, isPlayersTurn } = this.props;
+
+    if (!isPlayersTurn) return false;
+    if (checked.count() !== 3) return false;
+
+    const cardsSubset = cards.filter(card =>
+      checked.find(check => check === card.name),
+    );
+    const types = [
+      cardsSubset.get('0').type,
+      cardsSubset.get('1').type,
+      cardsSubset.get('2').type,
+    ];
+    if (types[0] === types[1] && types[0] === types[2]) return true;
+    if (types[0] !== types[1] && types[0] !== types[2] && types[1] !== types[2])
+      return true;
+
+    return false;
   };
 
   render() {
@@ -35,7 +58,12 @@ class CardsItem extends React.PureComponent {
         <div id="myProvinces">
           <h3 id="p">Mis Tarjetas de Provincias</h3>
           {this.renderCards()}
-          <Button variant="contained" color="secondary">
+          <Button
+            onClick={this.props.onCardsExchange}
+            disabled={!this.checkValidExchange()}
+            variant="contained"
+            color="secondary"
+          >
             Canjear Por Ejercitos
           </Button>
         </div>
@@ -52,7 +80,10 @@ class CardsItem extends React.PureComponent {
 
 CardsItem.propTypes = {
   cards: PropTypes.object.isRequired,
-  onCardChecked: PropTypes.func.isRequired,
+  checked: PropTypes.object.isRequired,
+  onCardToggle: PropTypes.func.isRequired,
+  onCardsExchange: PropTypes.func.isRequired,
+  isPlayersTurn: PropTypes.bool.isRequired,
 };
 
 export default CardsItem;

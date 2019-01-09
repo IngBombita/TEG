@@ -11,6 +11,7 @@ import ImageMapper from 'react-image-mapper';
 
 import map from './src/map.png';
 import './src/style.css';
+import loadProvincesPolygons from './src/loader';
 
 import Chip from '../../Chip';
 
@@ -35,6 +36,7 @@ class MapItem extends React.Component {
     };
 
     this.colors = ['red', 'green', 'blue', 'orange', 'magenta', 'black'];
+    this.polygonsMap = loadProvincesPolygons();
   }
 
   onResize = width => {
@@ -75,7 +77,7 @@ class MapItem extends React.Component {
         <ReactResizeDetector handleWidth onResize={this.onResize} />
         <ImageMapper
           src={map}
-          map={this.props.provincesPolygons}
+          map={this.polygonsMap}
           width={this.state.clientWidth}
           imgWidth={WIDTH_ABSOLUTE_SCALE}
           onClick={this.props.onMapClick}
@@ -90,7 +92,6 @@ class MapItem extends React.Component {
 
 MapItem.propTypes = {
   onMapClick: PropTypes.func.isRequired,
-  provincesPolygons: PropTypes.object.isRequired,
   chips: PropTypes.object.isRequired,
 };
 
