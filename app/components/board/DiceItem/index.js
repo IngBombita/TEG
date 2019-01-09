@@ -21,7 +21,7 @@ class DiceItem extends React.PureComponent {
   }
 
   handleDiceRollClick = () => {
-    if (this.props.allowDiceRoll) this.diceRef.rollAllDice();
+    this.diceRef.rollAllDice();
   };
 
   render() {
@@ -42,6 +42,7 @@ class DiceItem extends React.PureComponent {
             variant="contained"
             color="primary"
             onClick={this.handleDiceRollClick}
+            disabled={!this.props.allowDiceRoll}
           >
             Tirar los dados
           </Button>

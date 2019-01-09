@@ -32,7 +32,9 @@ class CardsItem extends React.PureComponent {
   };
 
   checkValidExchange = () => {
-    const { cards, checked } = this.props;
+    const { cards, checked, isPlayersTurn } = this.props;
+
+    if (!isPlayersTurn) return false;
     if (checked.count() !== 3) return false;
 
     const cardsSubset = cards.filter(card =>
@@ -81,6 +83,7 @@ CardsItem.propTypes = {
   checked: PropTypes.object.isRequired,
   onCardToggle: PropTypes.func.isRequired,
   onCardsExchange: PropTypes.func.isRequired,
+  isPlayersTurn: PropTypes.bool.isRequired,
 };
 
 export default CardsItem;

@@ -24,6 +24,11 @@ const makeSelectDiceAvailable = () =>
     substate.getIn(['dice', 'available']),
   );
 
+const makeSelectPlayersTurn = () =>
+  createSelector(selectBoardDomain, substate =>
+    substate.getIn(['game', 'isPlayersTurn']),
+  );
+
 export {
   makeSelectChips,
   // eslint-disable-next-line prettier/prettier
@@ -34,4 +39,7 @@ export {
 
   makeSelectDiceNumbers,
   makeSelectDiceAvailable,
+  // eslint-disable-next-line prettier/prettier
+
+  makeSelectPlayersTurn,
 };

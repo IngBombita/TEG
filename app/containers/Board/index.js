@@ -9,8 +9,6 @@
  * the linting exception.
 */
 
-import { toJS } from 'immutable';
-
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
@@ -25,15 +23,23 @@ import CardsItem from '../../components/board/CardsItem/Loadable';
 
 import {
   makeSelectChips,
-
+  // eslint-disable-next-line prettier/prettier
   makeSelectCardsHand,
   makeSelectCardsChecked,
-
+  // eslint-disable-next-line prettier/prettier
   makeSelectDiceNumbers,
   makeSelectDiceAvailable,
+  // eslint-disable-next-line prettier/prettier
+  makeSelectPlayersTurn,
 } from './selectors';
 
-import { setChip, updateCards, updateDice, updateCardsChecked } from './actions';
+import {
+  setChip,
+  updateCards,
+  updateDice,
+  updateCardsChecked,
+  updateTurn,
+} from './actions';
 
 import boardReducer from './reducer';
 
@@ -45,30 +51,45 @@ class Board extends React.PureComponent {
 
     this.objPrueba = {
       cards: [
-        { name: 'cordoba', type: 'tank' },
-        { name: 'mendoza', type: 'hot-air-balloon' },
-        { name: 'salta', type: 'boat' },
-        { name: 'tucuman', type: 'boat' },
+        { name: 'Cordoba', type: 'tank' },
+        { name: 'Mendoza', type: 'hot-air-balloon' },
+        { name: 'Salta', type: 'boat' },
+        { name: 'Tucuman', type: 'boat' },
+        { name: 'Misiones', type: 'boat' },
       ],
     };
     this.personalGoal = 'Insert the personal goal here';
+
+    alert(
+      'PARA ACTIVAR/DESACTIVAR EL TURNO APRETAR JUJUY\n' +
+      'PARA OBTENER CARTAS DE PROVINCIAS Y CAMBIAR LOS DADOS APRETAR MISIONES',
+    );
   }
 
   onClickInMap = event => {
     const province = event.name;
-    console.log(event);
+
     console.log(`${province} seleccionada.`);
 
+    if (province === 'Jujuy')
+      this.props.dispatch(updateTurn(!this.props.isPlayersTurn));
+
+    if (!this.props.isPlayersTurn) return;
+
+    if (province === 'Misiones') {
+      this.props.dispatch(updateCards(this.objPrueba.cards));
+      this.props.dispatch(updateDice([1, 2, 3], 3));
+    }
+
     this.props.dispatch(setChip(province, 1, 1));
-    this.props.dispatch(updateCards(this.objPrueba.cards));
-    this.props.dispatch(updateDice([1, 2, 3], 3));
   };
 
   handleUpdateCardsChecked = checked => {
     const checkedArray = checked.toJS();
-    
+
     this.props.dispatch(updateCardsChecked(checkedArray));
   };
+
   handleCardsExchange = () => {
     console.log('Exchange button pressed');
   };
@@ -78,21 +99,19 @@ class Board extends React.PureComponent {
   render() {
     return (
       <div id="back">
-        <MapItem
-          onMapClick={this.onClickInMap}
-          chips={this.props.chips}
-        />
+        <MapItem onMapClick={this.onClickInMap} chips={this.props.chips} />
         <DiceItem
           diceNumbers={this.props.diceNumbers}
           availableDice={this.props.diceAvailable}
           onRollFinished={this.onDiceRollFinished}
-          allowDiceRoll
+          allowDiceRoll={this.props.isPlayersTurn}
         />
         <CardsItem
           cards={this.props.cardsHand}
           checked={this.props.cardsChecked}
           onCardToggle={this.handleUpdateCardsChecked}
           onCardsExchange={this.handleCardsExchange}
+          isPlayersTurn={this.props.isPlayersTurn}
         />
       </div>
     );
@@ -108,6 +127,8 @@ Board.propTypes = {
 
   diceNumbers: PropTypes.object.isRequired,
   diceAvailable: PropTypes.number.isRequired,
+
+  isPlayersTurn: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -118,6 +139,8 @@ const mapStateToProps = createStructuredSelector({
 
   diceNumbers: makeSelectDiceNumbers(),
   diceAvailable: makeSelectDiceAvailable(),
+
+  isPlayersTurn: makeSelectPlayersTurn(),
 });
 
 function mapDispatchToProps(dispatch) {
