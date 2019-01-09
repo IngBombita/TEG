@@ -1,13 +1,33 @@
 const provinceCardRepository = require('../../../domain/Repositories/ProvinceCardRepository');
+const objectiveRepository = require('../../../domain/Repositories/ObjectiveRepository');
 
 exports.start = async function start(gameOptions) {
   const gameState = {};
   gameState.players = [];
   for (let i = 0; i < gameOptions.players; i++) {
-    gameState.players.push(new Player());
+    gameState.players.push({ provinces: [] });
+  }
+  gameState.roundOrder = [];
+  while (gameState.roundOrder.length < gameOptions.players) {
+    const randomPlayer = Math.floor(Math.random() * gameOptions.players);
+    if (gameState.roundOrder.indexOf(randomPlayer) === -1)
+      gameState.roundOrder.push(randomPlayer);
   }
   await dealProvinces(gameState);
+  await dealobjective(gameState);
+  gameState.currentPlayer =
+    gameState.roundOrder[0]; /* eslint prefer-destructuring: 0 */
   return gameState;
+};
+
+const dealobjective = async gameState => {
+  const objectivesArray = await objectiveRepository.getAll(
+    gameState.players.length,
+  );
+  shuffleArray(objectivesArray);
+  gameState.players.forEach((player, index) => {
+    player.objective = objectivesArray[index];
+  });
 };
 
 const dealProvinces = async gameState => {
@@ -30,7 +50,3 @@ function shuffleArray(array) {
     ]; /* eslint no-param-reassign: 0 */
   }
 }
-
-const Player = function Player() {
-  this.provinces = [];
-};
