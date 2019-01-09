@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /**
  *
  * CardsItem
@@ -30,13 +31,37 @@ class CardsItem extends React.PureComponent {
     );
   };
 
+  checkValidExchange = () => {
+    const { cards, checked } = this.props;
+    if (checked.count() !== 3) return false;
+
+    const cardsSubset = cards.filter(card =>
+      checked.find(check => check === card.name),
+    );
+    const types = [
+      cardsSubset.get('0').type,
+      cardsSubset.get('1').type,
+      cardsSubset.get('2').type,
+    ];
+    if (types[0] === types[1] && types[0] === types[2]) return true;
+    if (types[0] !== types[1] && types[0] !== types[2] && types[1] !== types[2])
+      return true;
+
+    return false;
+  };
+
   render() {
     return (
       <div id="cards">
         <div id="myProvinces">
           <h3 id="p">Mis Tarjetas de Provincias</h3>
           {this.renderCards()}
-          <Button onClick={this.props.onCardsExchange} variant="contained" color="secondary">
+          <Button
+            onClick={this.props.onCardsExchange}
+            disabled={!this.checkValidExchange()}
+            variant="contained"
+            color="secondary"
+          >
             Canjear Por Ejercitos
           </Button>
         </div>
