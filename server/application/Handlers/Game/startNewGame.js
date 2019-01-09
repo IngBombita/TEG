@@ -4,6 +4,7 @@ const objectiveRepository = require('../../../domain/Repositories/ObjectiveRepos
 exports.start = async function start(gameOptions) {
   const gameState = {};
   gameState.players = [];
+  gameState.provinceCardsDeck = [];
   for (let i = 0; i < gameOptions.players; i++) {
     gameState.players.push({ provinces: [] });
   }
@@ -34,6 +35,10 @@ const dealProvinces = async gameState => {
   const provincesArray = await provinceCardRepository.getAll();
   shuffleArray(provincesArray);
   provincesArray.forEach((province, index) => {
+    gameState.provinceCardsDeck.push({
+      name: province.name,
+      type: province.typeOfCard,
+    });
     gameState.players[index % gameState.players.length].provinces.push({
       name: province.name,
       chips: 1,
