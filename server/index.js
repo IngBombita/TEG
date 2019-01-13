@@ -44,7 +44,6 @@ app.get('*.js', (req, res, next) => {
 // Set up mongoose connection
 // eslint-disable-next-line prettier/prettier
 const dbUrl = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}${process.env.DB_HOST}`;
-console.log(dbUrl);
 
 mongoose.connect(
   dbUrl,

@@ -2,13 +2,14 @@ const provinceCardRepository = require('../../../domain/Repositories/ProvinceCar
 const objectiveRepository = require('../../../domain/Repositories/ObjectiveRepository');
 
 exports.start = async function start(gameOptions) {
-  const gameState = {};
-  gameState.players = [];
-  gameState.provinceCardsDeck = [];
+  const gameState = {
+    players: [],
+    roundOrder: [],
+    provinceCardsDeck: [],
+  };
   for (let i = 0; i < gameOptions.players; i++) {
     gameState.players.push({ provinces: [] });
   }
-  gameState.roundOrder = [];
   while (gameState.roundOrder.length < gameOptions.players) {
     const randomPlayer = Math.floor(Math.random() * gameOptions.players);
     if (gameState.roundOrder.indexOf(randomPlayer) === -1)

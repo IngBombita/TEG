@@ -23,13 +23,10 @@ import CardsItem from '../../components/board/CardsItem/Loadable';
 
 import {
   makeSelectChips,
-  // eslint-disable-next-line prettier/prettier
   makeSelectCardsHand,
   makeSelectCardsChecked,
-  // eslint-disable-next-line prettier/prettier
   makeSelectDiceNumbers,
   makeSelectDiceAvailable,
-  // eslint-disable-next-line prettier/prettier
   makeSelectPlayersTurn,
 } from './selectors';
 
@@ -62,7 +59,7 @@ class Board extends React.PureComponent {
 
     alert(
       'PARA ACTIVAR/DESACTIVAR EL TURNO APRETAR JUJUY\n' +
-      'PARA OBTENER CARTAS DE PROVINCIAS Y CAMBIAR LOS DADOS APRETAR MISIONES',
+        'PARA OBTENER CARTAS DE PROVINCIAS Y CAMBIAR LOS DADOS APRETAR MISIONES',
     );
   }
 
