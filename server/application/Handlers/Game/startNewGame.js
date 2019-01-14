@@ -6,6 +6,7 @@ exports.start = async function start(gameOptions) {
     players: [],
     roundOrder: [],
     provinceCardsDeck: [],
+    roundNumber: 1,
   };
   for (let i = 0; i < gameOptions.players; i++) {
     gameState.players.push({ provinces: [] });
