@@ -1,9 +1,7 @@
 const validator = require('../../Validators/Game/attackValidator');
-const attackRouteRepository = require('../../../domain/Repositories/AttackRouteRepository');
 
 exports.attack = async function attack(gameState) {
-  const avaibleRoutes = await attackRouteRepository.getAll();
-  validator.run(gameState, avaibleRoutes);
+  validator.run(gameState);
   const diceResults = rollDices(gameState);
   const gameStateUpdated = updateState(diceResults, gameState);
   return gameStateUpdated;
