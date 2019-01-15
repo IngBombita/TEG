@@ -14,3 +14,4 @@ package-lock.json
 
 # No .env (DB user and password)
 .env
+seed.js

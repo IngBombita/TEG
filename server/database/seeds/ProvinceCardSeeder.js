@@ -23,7 +23,7 @@ const seed = () => {
       { name: 'SanLuis', typeOfCard: 0, region: 'Cuyo' },
       { name: 'SantaCruz', typeOfCard: 1, region: 'Patagonia' },
       { name: 'SantaFe', typeOfCard: 2, region: 'Centro' },
-      { name: 'SantiagodelEstero', typeOfCard: 0, region: 'Noroeste' },
+      { name: 'SantiagoDelEstero', typeOfCard: 0, region: 'Noroeste' },
       { name: 'TierraDelFuego', typeOfCard: 1, region: 'Patagonia' },
       { name: 'Tucuman', typeOfCard: 2, region: 'Noroeste' },
       { name: 'BandaOriental', typeOfCard: 0, region: 'Centro' },
