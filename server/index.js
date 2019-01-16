@@ -59,6 +59,18 @@ db.once('open', () => {
 
 // Start your app.
 app.listen(port, host, async err => {
+  // Set up mongoose connection
+  // eslint-disable-next-line prettier/prettier
+  const dbUrl = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}${process.env.DB_HOST}`;
+
+  mongoose.connect(
+    dbUrl,
+    { useNewUrlParser: true },
+  );
+
+  const db = mongoose.connection;
+  db.on('error', error => logger.error(error.message));
+
   if (err) {
     return logger.error(err.message);
   }

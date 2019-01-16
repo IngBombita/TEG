@@ -4,6 +4,21 @@ const initialController = require('../../Controllers/game/initialController');
 const attackController = require('../../Controllers/game/attackController');
 
 router.post('/start', initialController.startNewGame);
+router.get('/start', (req, res) => {
+  res.json({ message: 'metodo get de la URL api-game-start' });
+});
+
 router.post('/attack', attackController.attack);
 
 module.exports = router;
+
+/*
+cuerpo del mensaje post
+
+{
+	"players": [0,1,2],
+	"roundOrder": [],
+	"provinceCardsDeck": [],
+	"roundNumber": 1
+}
+*/
