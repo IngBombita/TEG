@@ -49,3 +49,13 @@ export function updateTurn(isPlayersTurn) {
     },
   };
 }
+
+export const SET_OBJECTIVE = 'SET_OBJECTIVE';
+export function setObjective(objective) {
+  return {
+    type: SET_OBJECTIVE,
+    data: {
+      objective,
+    },
+  };
+}

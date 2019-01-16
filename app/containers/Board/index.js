@@ -36,6 +36,7 @@ import {
   updateDice,
   updateCardsChecked,
   updateTurn,
+  setObjective,
 } from './actions';
 
 import boardReducer from './reducer';
@@ -126,6 +127,8 @@ Board.propTypes = {
   diceAvailable: PropTypes.number.isRequired,
 
   isPlayersTurn: PropTypes.bool.isRequired,
+
+  objetive: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({

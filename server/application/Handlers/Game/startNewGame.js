@@ -8,11 +8,11 @@ exports.start = async function start(gameOptions) {
     provinceCardsDeck: [],
     roundNumber: 1,
   };
-  for (let i = 0; i < gameOptions.players; i++) {
+  for (let i = 0; i < gameOptions.players.length; i++) {
     gameState.players.push({ provinces: [] });
   }
-  while (gameState.roundOrder.length < gameOptions.players) {
-    const randomPlayer = Math.floor(Math.random() * gameOptions.players);
+  while (gameState.roundOrder.length < gameOptions.players.length) {
+    const randomPlayer = Math.floor(Math.random() * gameOptions.players.length);
     if (gameState.roundOrder.indexOf(randomPlayer) === -1)
       gameState.roundOrder.push(randomPlayer);
   }
