@@ -3,6 +3,7 @@ require('custom-env').env();
 
 const mongoose = require('mongoose');
 const express = require('express');
+const bodyParser = require('body-parser');
 const logger = require('./logger');
 const gameApi = require('./infrastructure/routes/router');
 const argv = require('./argv');
@@ -15,6 +16,9 @@ const ngrok =
     : false;
 const { resolve } = require('path');
 const app = express();
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 app.use('/api', gameApi);
@@ -35,6 +39,22 @@ app.get('*.js', (req, res, next) => {
   req.url = req.url + '.gz'; // eslint-disable-line
   res.set('Content-Encoding', 'gzip');
   next();
+});
+
+// Set up mongoose connection
+// eslint-disable-next-line prettier/prettier
+const dbUrl = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}${process.env.DB_HOST}`;
+
+mongoose.connect(
+  dbUrl,
+  { useNewUrlParser: true },
+);
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => {
+  // we're connected!
+  console.log('CONECTADO A LA MONGO DB!');
 });
 
 // Start your app.

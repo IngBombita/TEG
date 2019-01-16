@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 const provinceCardSchema = new Schema({
   name: { type: String, required: true, unique: true },
   typeOfCard: { type: Number, min: 0, max: 3 },
+  region: { type: String, required: true },
 });
 
 const ProvinceCard = mongoose.model('province_card', provinceCardSchema);

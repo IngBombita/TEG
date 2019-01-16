@@ -17,54 +17,79 @@ import PropTypes from 'prop-types';
 
 import React from 'react';
 
-import MapItem from '../../components/board/MapItem';
-import DiceItem from '../../components/board/DiceItem';
-import CardsItem from '../../components/board/CardsItem';
-
-import loadProvincesPolygons from './src/loader';
+import MapItem from '../../components/board/MapItem/Loadable';
+import DiceItem from '../../components/board/DiceItem/Loadable';
+import CardsItem from '../../components/board/CardsItem/Loadable';
 
 import {
   makeSelectChips,
-  makeSelectCards,
+  makeSelectCardsHand,
+  makeSelectCardsChecked,
   makeSelectDiceNumbers,
   makeSelectDiceAvailable,
+  makeSelectPlayersTurn,
 } from './selectors';
 
-import { setChip, updateCards, updateDice } from './actions';
+import {
+  setChip,
+  updateCards,
+  updateDice,
+  updateCardsChecked,
+  updateTurn,
+  setObjective,
+} from './actions';
 
 import boardReducer from './reducer';
 
 import './src/style.css';
 
-class Board extends React.Component {
+class Board extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.objPrueba = {
       cards: [
-        { name: 'cordoba', type: 'tank' },
-        { name: 'mendoza', type: 'hot-air-balloon' },
-        { name: 'salta', type: 'boat' },
-        { name: 'tucuman', type: 'boat' },
+        { name: 'Cordoba', type: 'tank' },
+        { name: 'Mendoza', type: 'hot-air-balloon' },
+        { name: 'Salta', type: 'boat' },
+        { name: 'Tucuman', type: 'boat' },
+        { name: 'Misiones', type: 'boat' },
       ],
     };
     this.personalGoal = 'Insert the personal goal here';
 
-    this.map = loadProvincesPolygons();
+    alert(
+      'PARA ACTIVAR/DESACTIVAR EL TURNO APRETAR JUJUY\n' +
+        'PARA OBTENER CARTAS DE PROVINCIAS Y CAMBIAR LOS DADOS APRETAR MISIONES',
+    );
   }
 
   onClickInMap = event => {
     const province = event.name;
-    console.log(event);
+
     console.log(`${province} seleccionada.`);
 
+    if (province === 'Jujuy')
+      this.props.dispatch(updateTurn(!this.props.isPlayersTurn));
+
+    if (!this.props.isPlayersTurn) return;
+
+    if (province === 'Misiones') {
+      this.props.dispatch(updateCards(this.objPrueba.cards));
+      this.props.dispatch(updateDice([1, 2, 3], 3));
+    }
+
     this.props.dispatch(setChip(province, 1, 1));
-    this.props.dispatch(updateCards(this.objPrueba.cards));
-    this.props.dispatch(updateDice([1, 2, 3], 3));
   };
 
-  handleChecked = check => {
-    console.log(check);
+  handleUpdateCardsChecked = checked => {
+    const checkedArray = checked.toJS();
+
+    this.props.dispatch(updateCardsChecked(checkedArray));
+  };
+
+  handleCardsExchange = () => {
+    console.log('Exchange button pressed');
   };
 
   onDiceRollFinished = () => {};
@@ -72,20 +97,19 @@ class Board extends React.Component {
   render() {
     return (
       <div id="back">
-        <MapItem
-          onMapClick={this.onClickInMap}
-          provincesPolygons={this.map}
-          chips={this.props.chips}
-        />
+        <MapItem onMapClick={this.onClickInMap} chips={this.props.chips} />
         <DiceItem
           diceNumbers={this.props.diceNumbers}
           availableDice={this.props.diceAvailable}
           onRollFinished={this.onDiceRollFinished}
-          allowDiceRoll
+          allowDiceRoll={this.props.isPlayersTurn}
         />
         <CardsItem
-          cards={this.props.cards}
-          onCardChecked={this.handleChecked}
+          cards={this.props.cardsHand}
+          checked={this.props.cardsChecked}
+          onCardToggle={this.handleUpdateCardsChecked}
+          onCardsExchange={this.handleCardsExchange}
+          isPlayersTurn={this.props.isPlayersTurn}
         />
       </div>
     );
@@ -93,17 +117,30 @@ class Board extends React.Component {
 }
 Board.propTypes = {
   dispatch: PropTypes.func.isRequired,
+
   chips: PropTypes.object.isRequired,
-  cards: PropTypes.object.isRequired,
+
+  cardsHand: PropTypes.object.isRequired,
+  cardsChecked: PropTypes.object.isRequired,
+
   diceNumbers: PropTypes.object.isRequired,
   diceAvailable: PropTypes.number.isRequired,
+
+  isPlayersTurn: PropTypes.bool.isRequired,
+
+  objetive: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   chips: makeSelectChips(),
-  cards: makeSelectCards(),
+
+  cardsHand: makeSelectCardsHand(),
+  cardsChecked: makeSelectCardsChecked(),
+
   diceNumbers: makeSelectDiceNumbers(),
   diceAvailable: makeSelectDiceAvailable(),
+
+  isPlayersTurn: makeSelectPlayersTurn(),
 });
 
 function mapDispatchToProps(dispatch) {
