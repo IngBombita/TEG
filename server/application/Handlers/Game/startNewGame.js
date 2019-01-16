@@ -8,7 +8,7 @@ exports.start = async function start(gameOptions) {
     provinceCardsDeck: [],
     roundNumber: 1,
   };
-  for (let i = 0; i < gameOptions.players.length; i++) {
+  for (let i = 0; i < gameOptions.players; i++) {
     gameState.players.push({ provinces: [] });
   }
   while (gameState.roundOrder.length < gameOptions.players.length) {
