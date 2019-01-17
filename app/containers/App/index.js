@@ -11,6 +11,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Board from 'containers/Board/Loadable';
+import Room from 'containers/Room/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import GlobalStyle from '../../global-styles';
@@ -19,7 +20,8 @@ export default function App() {
   return (
     <div>
       <Switch>
-        <Route exact path="/" component={Board} />
+        <Route exact path="/game" component={Board} />
+        <Route exact path="/" component={Room} />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />
