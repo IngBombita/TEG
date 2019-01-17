@@ -5,38 +5,79 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Client } from 'colyseus.js';
-
+import * as Colyseus from 'colyseus.js';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import makeSelectRoom from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-
 /* eslint-disable react/prefer-stateless-function */
 export class Room extends React.Component {
+  constructor() {
+    super();
+
+    const endpoint = 'ws://localhost:3000';
+
+    this.colyseus = new Colyseus.Client(endpoint);
+    this.chatRoom = this.colyseus.join('chat');
+
+    this.colyseus.onOpen.add(() => {
+      console.log('connection is now open');
+    });
+    this.colyseus.onClose.add(() => {
+      console.log('Connection closed');
+    });
+    this.colyseus.onError.add(err => {
+      console.log('something wrong happened', err);
+    });
+
+    this.state = {
+      currentText: '',
+      messages: [],
+    };
+  }
+
+  onUpdateRemote(newState, patches) {
+    console.log('new state: ', newState, 'patches:', patches);
+    this.setState(newState, this.autoScroll.bind(this));
+  }
+
+  onInputChange(e) {
+    e.preventDefault();
+
+    this.setState({ currentText: e.target.value });
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+    this.chatRoom.send(this.state.currentText);
+    this.setState({ currentText: '' });
+  }
+
   render() {
-    const client = new Client('ws://localhost:3000');
-    const room = client.join('chat');
-    room.onJoin.add(() => {
-      console.log(`${room.sessionId} joined!`);
-    });
+    return (
+      <div>
+        <div id="messages" ref="messages">
+          {this.state.messages.map((message, i) => (
+            <p key={i}>{message}</p>
+          ))}
+        </div>
 
-    room.onStateChange.add(state => {
-      console.log('new state:', state);
-    });
-
-    room.onError.add(err => {
-      console.log('oops, error ocurred:');
-      console.log(err);
-    });
-
-    room.send('Hello world!');
-    return <div />;
+        <form id="form" onSubmit={this.onSubmit.bind(this)}>
+          <input
+            id="input"
+            type="text"
+            onChange={this.onInputChange.bind(this)}
+            value={this.state.currentText}
+          />
+          <button type="submit">send</button>
+        </form>
+      </div>
+    );
   }
 }
 

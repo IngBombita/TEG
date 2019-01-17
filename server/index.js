@@ -46,7 +46,7 @@ const ChatRoom = require('./infrastructure/Rooms/ChatRoom');
 gameServer.register('chat', ChatRoom);
 
 // Start your app.
-app.listen(port, host, async err => {
+gameServer.httpServer.listen(port, host, async err => {
   // Set up mongoose connection
   // eslint-disable-next-line prettier/prettier
   const dbUrl = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}${process.env.DB_HOST}`;
