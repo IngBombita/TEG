@@ -3,10 +3,14 @@ const colyseus = require('colyseus');
 
 class ChatRoom extends colyseus.Room {
   onInit() {
-    this.setState({ messages: [] });
+    this.setState({
+      currentText: '',
+      messages: [],
+    });
   }
 
   onJoin(client) {
+    console.log(this.state);
     this.state.messages.push(`${client.sessionId} joined.`);
     console.log(client.sessionId + ' :   ' + 'Ha entrado a la buegada');
   }
@@ -14,6 +18,7 @@ class ChatRoom extends colyseus.Room {
   onMessage(client, data) {
     this.state.messages.push(data);
     console.log(this.state.messages);
+    this.broadcast(this.state.messages);
   }
 }
 

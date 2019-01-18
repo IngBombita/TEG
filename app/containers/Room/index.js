@@ -15,7 +15,7 @@ import injectReducer from 'utils/injectReducer';
 import makeSelectRoom from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-/* eslint-disable react/prefer-stateless-function */
+
 export class Room extends React.Component {
   constructor() {
     super();
@@ -25,9 +25,21 @@ export class Room extends React.Component {
     this.colyseus = new Colyseus.Client(endpoint);
     this.chatRoom = this.colyseus.join('chat');
 
+    this.chatRoom.onMessage.add(message => {
+      console.log('server just sent this message:');
+      console.log(message);
+      this.state.messages.push(message);
+    });
+
     this.colyseus.onOpen.add(() => {
       console.log('connection is now open');
     });
+
+    this.chatRoom.onStateChange.add(state => {
+      console.log('the room state has been updated:', state);
+      this.setState(state);
+    });
+
     this.colyseus.onClose.add(() => {
       console.log('Connection closed');
     });
@@ -48,13 +60,13 @@ export class Room extends React.Component {
 
   onInputChange(e) {
     e.preventDefault();
-
     this.setState({ currentText: e.target.value });
   }
 
   onSubmit(e) {
     e.preventDefault();
     this.chatRoom.send(this.state.currentText);
+    console.log(this.state);
     this.setState({ currentText: '' });
   }
 
