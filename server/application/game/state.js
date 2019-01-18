@@ -8,6 +8,4 @@ const initialState = {
   currentPlayer: 0,
 };
 
-let gameState = initialState;
-
 module.exports = initialState;
