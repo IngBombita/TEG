@@ -7,6 +7,9 @@ router.post('/start', initialController.startNewGame);
 router.get('/start', (req, res) => {
   res.json({ message: 'metodo get de la URL api-game-start' });
 });
+router.get('/teapot', (req, res) => {
+  res.status(418).send("I'm a teapot :)");
+});
 
 router.post('/attack', attackController.attack);
 

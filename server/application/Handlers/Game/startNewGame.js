@@ -1,51 +1,72 @@
 const provinceCardRepository = require('../../../domain/Repositories/ProvinceCardRepository');
 const objectiveRepository = require('../../../domain/Repositories/ObjectiveRepository');
 
+const { makeNewGame } = require('../../game/actions').actions.factory;
+
 exports.start = async function start(gameOptions) {
-  const gameState = {
-    players: [],
-    roundOrder: [],
-    provinceCardsDeck: [],
-    roundNumber: 1,
-  };
-  for (let i = 0; i < gameOptions.players; i++) {
-    gameState.players.push({ provinces: [] });
-  }
-  while (gameState.roundOrder.length < gameOptions.players.length) {
-    const randomPlayer = Math.floor(Math.random() * gameOptions.players.length);
-    if (gameState.roundOrder.indexOf(randomPlayer) === -1)
-      gameState.roundOrder.push(randomPlayer);
-  }
-  await dealProvinces(gameState);
-  await dealobjective(gameState);
-  gameState.currentPlayer =
-    gameState.roundOrder[0]; /* eslint prefer-destructuring: 0 */
-  return gameState;
-};
+  const roundOrder = [];
+  const playerNum = gameOptions.players;
 
-const dealobjective = async gameState => {
-  const objectivesArray = await objectiveRepository.getAll(
-    gameState.players.length,
+  while (roundOrder.length < playerNum) {
+    const randomPlayer = Math.floor(Math.random() * playerNum);
+    if (roundOrder.indexOf(randomPlayer) === -1) roundOrder.push(randomPlayer);
+  }
+
+  const provinces = await dealProvinces(playerNum);
+  const { cardsDeck, playerProvinces } = provinces;
+  const playerObjectives = await dealObjectives(playerNum);
+
+  const action = makeNewGame(
+    playerNum,
+    playerProvinces,
+    playerObjectives,
+    roundOrder,
+    cardsDeck,
   );
-  shuffleArray(objectivesArray);
-  gameState.players.forEach((player, index) => {
-    player.objective = objectivesArray[index];
-  });
+  return action;
 };
 
-const dealProvinces = async gameState => {
+const dealObjectives = async playerNum => {
+  const objectivesArray = await objectiveRepository.getAll(playerNum);
+  const playerObjectives = [];
+
+  shuffleArray(objectivesArray);
+
+  let i;
+  for (i = 0; i < playerNum; i++) {
+    playerObjectives[i] = objectivesArray[i];
+  }
+  return playerObjectives;
+};
+
+const dealProvinces = async playerNum => {
   const provincesArray = await provinceCardRepository.getAll();
   shuffleArray(provincesArray);
+
+  const provinces = {
+    cardsDeck: [],
+    playerProvinces: [],
+  };
+
+  let i;
+  for (i = 0; i < playerNum; i++) {
+    provinces.playerProvinces.push([]);
+  }
+
   provincesArray.forEach((province, index) => {
-    gameState.provinceCardsDeck.push({
+    provinces.cardsDeck.push({
       name: province.name,
       type: province.typeOfCard,
     });
-    gameState.players[index % gameState.players.length].provinces.push({
+
+    const playerIndex = index % playerNum;
+    provinces.playerProvinces[playerIndex].push({
       name: province.name,
       chips: 1,
     });
   });
+
+  return provinces;
 };
 
 function shuffleArray(array) {

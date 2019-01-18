@@ -43,34 +43,29 @@ app.get('*.js', (req, res, next) => {
 
 // Set up mongoose connection
 // eslint-disable-next-line prettier/prettier
-const dbUrl = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}${process.env.DB_HOST}`;
+const dbURL = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}${process.env.DB_HOST}`;
+dbConnect(dbURL, onDBConnect);
 
-mongoose.connect(
-  dbUrl,
-  { useNewUrlParser: true },
-);
+function onDBConnect() {
+  console.log('Conectado a la MongoDB !');
+  this.isDBConnected = true;
+}
 
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-  // we're connected!
-  console.log('CONECTADO A LA MONGO DB!');
-});
-
-// Start your app.
-app.listen(port, host, async err => {
-  // Set up mongoose connection
-  // eslint-disable-next-line prettier/prettier
-  const dbUrl = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}${process.env.DB_HOST}`;
-
+function dbConnect(url, onConnectCallback) {
   mongoose.connect(
-    dbUrl,
+    url,
     { useNewUrlParser: true },
   );
 
   const db = mongoose.connection;
-  db.on('error', error => logger.error(error.message));
-
+  db.on('error', console.error.bind(console, 'connection error:'));
+  db.once('open', () => {
+    // we're connected!
+    onConnectCallback();
+  });
+}
+// Start your app.
+app.listen(port, host, async err => {
   if (err) {
     return logger.error(err.message);
   }
