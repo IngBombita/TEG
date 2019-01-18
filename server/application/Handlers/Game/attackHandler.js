@@ -43,11 +43,15 @@ const updateState = (diceResults, gameState) => {
     const conquista = gameStateUpdated.players[
       gameState.action.to.player
     ].provinces.filter(
-      province => province.name !== gameState.action.to.province.name,
+      province => province.name === gameState.action.to.province,
     );
     conquista[0].chips = 1;
     gameStateUpdated.players[gameState.action.from.player].provinces.push(
       conquista[0],
+    );
+    gameStateUpdated.players[gameState.action.to.player].provinces.splice(
+      attackerProvinceIndex,
+      1,
     );
   }
   return gameStateUpdated;
