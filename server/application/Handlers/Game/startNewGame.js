@@ -1,7 +1,8 @@
 const provinceCardRepository = require('../../../domain/Repositories/ProvinceCardRepository');
 const objectiveRepository = require('../../../domain/Repositories/ObjectiveRepository');
 
-const { makeNewGame } = require('../../game/actions').actions.factory;
+const { makeNewGame } = require('../../Actions/Game').actions.factory;
+const dispatch = require('../../Dispatcher');
 
 exports.start = async function start(gameOptions) {
   const roundOrder = [];
@@ -23,7 +24,7 @@ exports.start = async function start(gameOptions) {
     roundOrder,
     cardsDeck,
   );
-  return action;
+  return dispatch(action);
 };
 
 const dealObjectives = async playerNum => {
