@@ -13,6 +13,8 @@ import { Switch, Route } from 'react-router-dom';
 import Board from 'containers/Board/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
+import LogUp from 'containers/LogUp/Loadable';
+
 import GlobalStyle from '../../global-styles';
 
 export default function App() {
@@ -21,7 +23,7 @@ export default function App() {
       <Switch>
         <Route exact path="/" component={Board} />
         <Route exact path="/logIn" component={Board} />
-        <Route exact path="/logUp" component={Board} />
+        <Route exact path="/logUp" component={LogUp} />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />
