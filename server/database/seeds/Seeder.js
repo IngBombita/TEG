@@ -1,9 +1,11 @@
 require('custom-env').env();
 const mongoose = require('mongoose');
-const attackRouteSeeder = require('./AttackRouteSeeder');
+const usersSeeder = require('./UsersSeeder');
+// const attackRouteSeeder = require('./AttackRouteSeeder');
 // const provinceCardSeeder = require('./ProvinceCardSeeder');
 // const objectiveSeeder = require('./ObjectiveSeeder');
 
+// const dbUrl = 'mongodb://sanfrancisco:5palomas@ds161459.mlab.com:61459/batallas_provincianas';
 const dbUrl = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}${
   process.env.DB_HOST
 }`;
@@ -22,5 +24,6 @@ db.once('open', () => {
 
   // provinceCardSeeder(); // --> Ya esta
   // objectiveSeeder();
-  attackRouteSeeder();
+  // attackRouteSeeder();
+  usersSeeder();
 });
