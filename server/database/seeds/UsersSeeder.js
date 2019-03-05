@@ -38,7 +38,7 @@ const seed = () => {
     lastName: 'Minacori',
     nickName: 'Cayman',
     password: '1234',
-    email: 'alejandrominacoria@gmail.com',
+    email: 'alejandrominacori@gmail.com',
     token: 'aaadddd',
     timeToken: '124123623123',
     dateLogUp: '28/02/2018',

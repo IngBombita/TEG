@@ -50,7 +50,6 @@ function SignUp(props) {
   const { classes } = props;
 
   return (
-    <div backgroundColor='#55b9d9'>
     <main className={classes.main}>
       <CssBaseline />
       <Paper className={classes.paper}>
@@ -96,7 +95,6 @@ function SignUp(props) {
         </form>
       </Paper>
     </main>
-    </div>
   );
 }
 
