@@ -80,6 +80,7 @@
     "lodash": "4.17.11",
     "minimist": "1.2.0",
     "mongoose": "^5.4.1",
+    "nodemailer": "^5.1.1",
     "prop-types": "15.6.2",
     "rand-token": "^0.4.0",
     "react": "16.6.0",

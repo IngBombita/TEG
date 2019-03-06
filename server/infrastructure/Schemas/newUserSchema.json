@@ -4,7 +4,7 @@
   "$id": "http://example.com/root.json",
   "type": "object",
   "title": "The Root Schema",
-  "required": ["name", "lastName", "nick", "emailAddress", "password"],
+  "required": ["name", "lastName", "nickName", "email", "password"],
   "properties": {
     "name": {
       "$id": "#/properties/name",
@@ -22,7 +22,7 @@
       "examples": ["gigena"],
       "pattern": "^[a-zA-Z]*$"
     },
-    "nick": {
+    "nickName": {
       "$id": "#/properties/nick",
       "type": "string",
       "title": "The Nick Schema",
@@ -30,7 +30,7 @@
       "examples": ["nico19"],
       "pattern": "^\\w+[\\-\\_\\w]*$"
     },
-    "emailAddress": {
+    "email": {
       "$id": "#/properties/emailAddress",
       "type": "string",
       "title": "The Emailaddress Schema",
