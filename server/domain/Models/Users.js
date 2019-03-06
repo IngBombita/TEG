@@ -9,9 +9,16 @@ const usersSchema = new Schema({
   nickName: { type: String, required: true, unique: false },
   password: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  token: {},
-  timeToken: {},
-  dateLogUp: {},
+  session: {
+    token: { type: String, required: false },
+    timeExpiration: { type: String, required: false },
+  },
+  stateAccount: {
+    verificationToken: { type: String, required: false },
+    timeExpiration: { type: Date, required: false },
+    isVerificated: { type: Boolean, required: false },
+  },
+  dateLogUp: { type: Date, required: false },
 });
 
 usersSchema.pre('save', function(next) {
