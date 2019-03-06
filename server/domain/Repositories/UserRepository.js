@@ -1,3 +1,4 @@
+const randToken = require('rand-token');
 const UserModel = require('../Models/Users');
 
 exports.exploreUsers = async emailUser => {
@@ -8,11 +9,12 @@ exports.exploreUsers = async emailUser => {
     { _id: 1 },
   );
   const data = await query.exec();
-  if (data) return true;
+  if (data.length !== 0) return true;
   return false;
 };
 
 exports.registerUser = async dataUser => {
+  const day = new Date();
   // create a user a new user
   const newUser = new UserModel({
     name: dataUser.name,
@@ -20,9 +22,16 @@ exports.registerUser = async dataUser => {
     nickName: dataUser.nickName,
     password: dataUser.password,
     email: dataUser.email,
-    token: dataUser.token,
-    timeToken: dataUser.timeToken,
-    dateLogUp: dataUser.dateLogUp,
+    session: {
+      token: '',
+      timeExpiration: '',
+    },
+    stateAccount: {
+      verificationToken: randToken.generate(32),
+      timeExpiration: day.setDate(day.getDate() + 1),
+      isVerificated: false,
+    },
+    dateLogUp: Date.now(),
   });
 
   // save user to database
