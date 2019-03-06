@@ -1,0 +1,50 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": ["name", "lastName", "nick", "emailAddress", "password"],
+  "properties": {
+    "name": {
+      "$id": "#/properties/name",
+      "type": "string",
+      "title": "The Name Schema",
+      "default": "",
+      "examples": ["nico"],
+      "pattern": "^[a-zA-Z]*$"
+    },
+    "lastName": {
+      "$id": "#/properties/lastName",
+      "type": "string",
+      "title": "The Lastname Schema",
+      "default": "",
+      "examples": ["gigena"],
+      "pattern": "^[a-zA-Z]*$"
+    },
+    "nick": {
+      "$id": "#/properties/nick",
+      "type": "string",
+      "title": "The Nick Schema",
+      "default": "",
+      "examples": ["nico19"],
+      "pattern": "^\\w+[\\-\\_\\w]*$"
+    },
+    "emailAddress": {
+      "$id": "#/properties/emailAddress",
+      "type": "string",
+      "title": "The Emailaddress Schema",
+      "default": "",
+      "examples": ["nico@gamil.com"],
+      "pattern": "^[^@]+@[^@]+\\.[a-zA-Z]{2,}$"
+    },
+    "password": {
+      "$id": "#/properties/password",
+      "type": "string",
+      "title": "The Password Schema",
+      "default": "",
+      "examples": ["nico123"],
+      "pattern": "^(.*)$"
+    }
+  }
+}

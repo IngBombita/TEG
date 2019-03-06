@@ -7,8 +7,4 @@ router.post('/logup', (req, res) => {
   logUpController.register(req, res);
 });
 
-router.get('/logup', (req, res) => {
-  res.json({ message: 'metodo get de la URL api-game-start' });
-});
-
 module.exports = router;
