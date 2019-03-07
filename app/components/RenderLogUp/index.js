@@ -4,16 +4,18 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-//import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import './src/index.css';
 
 const styles = theme => ({
+  container: {
+    backgroundColor: 'bisque',
+  },
   main: {
     width: 'auto',
     display: 'block', // Fix IE 11 issue.
@@ -49,52 +51,114 @@ const styles = theme => ({
 function SignUp(props) {
   const { classes } = props;
 
+  let name;
+  let lastName;
+  let nickName;
+  let email;
+  let password;
+
+  const handleName = event => {
+    name = event.target.value;
+  };
+
+  const handleLastName = event => {
+    lastName = event.target.value;
+  };
+
+  const handleNickName = event => {
+    nickName = event.target.value;
+  };
+
+  const handleEmail = event => {
+    email = event.target.value;
+  };
+
+  const handlePassword = event => {
+    password = event.target.value;
+  };
+
+  const handleClick = () => {
+    props.onClick({
+      name,
+      lastName,
+      nickName,
+      email,
+      password,
+    });
+  };
+
   return (
-    <main className={classes.main}>
-      <CssBaseline />
-      <Paper className={classes.paper}>
-        <Avatar className={classes.avatar} />
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-        <form className={classes.form}>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Name</InputLabel>
-            <Input id="name" name="name" autoComplete="name" autoFocus />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Last Name</InputLabel>
-            <Input id="lastName" name="lastName" autoComplete="lastName" />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Nick</InputLabel>
-            <Input id="nickName" name="nickName" autoComplete="nickName" />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Email Address</InputLabel>
-            <Input id="email" name="email" autoComplete="email" />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="password">Password</InputLabel>
-            <Input
-              name="password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-          </FormControl>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
+    <div className={classes.container}>
+      <main className={classes.main}>
+        <CssBaseline />
+        <Paper className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
             Sign up
-          </Button>
-        </form>
-      </Paper>
-    </main>
+          </Typography>
+          <form className={classes.form}>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="email">Name</InputLabel>
+              <Input
+                id="name"
+                name="name"
+                autoComplete="name"
+                autoFocus
+                onChange={handleName}
+              />
+            </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="email">Last Name</InputLabel>
+              <Input
+                id="lastName"
+                name="lastName"
+                autoComplete="lastName"
+                onChange={handleLastName}
+              />
+            </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="email">Nick</InputLabel>
+              <Input
+                id="nickName"
+                name="nickName"
+                autoComplete="nickName"
+                onChange={handleNickName}
+              />
+            </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="email">Email Address</InputLabel>
+              <Input
+                id="email"
+                name="email"
+                autoComplete="email"
+                onChange={handleEmail}
+              />
+            </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="password">Password</InputLabel>
+              <Input
+                name="password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={handlePassword}
+              />
+            </FormControl>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={handleClick}
+            >
+              Sign up
+            </Button>
+          </form>
+        </Paper>
+      </main>
+    </div>
   );
 }
 
