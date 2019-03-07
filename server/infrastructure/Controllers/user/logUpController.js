@@ -10,10 +10,10 @@ exports.register = async function register(req, res) {
     const dataUser = logUpAdapter.register(data);
     logUpState = await logUpHandler.register(dataUser);
 
-    if (logUpState) {
+    /*if (logUpState) {
       const token = logUpState.stateAccount.verificationToken;
       await emailService.SendVerificationEmail(data.email, token);
-    }
+    }*/
   } catch (err) {
     res.status(err.returnState);
     res.send(err.returnMessage);
