@@ -16,6 +16,7 @@ const ngrok =
     : false;
 const { resolve } = require('path');
 const app = express();
+const repositorioUsuarios = require('./domain/Repositories/UserRepository');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -55,6 +56,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   // we're connected!
   console.log('CONECTADO A LA MONGO DB!');
+  // repositorioUsuarios.verificateTokenLogUp();
 });
 
 // Start your app.
