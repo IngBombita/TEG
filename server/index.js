@@ -53,10 +53,18 @@ mongoose.connect(
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
+db.once('open', async () => {
   // we're connected!
   console.log('CONECTADO A LA MONGO DB!');
-  // repositorioUsuarios.verificateTokenLogUp();
+  const data = await repositorioUsuarios.verificateTokenLogUp();
+  console.log(data);
+  // eslint-disable-next-line no-restricted-syntax
+  for (const email in data) {
+    if (data.hasOwnProperty(email)) {
+      const element = data[email];
+      repositorioUsuarios.deleteUser(element.email);
+    }
+  }
 });
 
 // Start your app.

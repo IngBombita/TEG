@@ -58,8 +58,8 @@ exports.registerUser = async dataUser => {
   return newUser;
 };
 
-exports.deleteUser = async email => {
-  UserModel.remove(email, err => {
+exports.deleteUser = async emailUser => {
+  UserModel.deleteOne({ email: emailUser }, err => {
     if (err) {
       throw errorDelete;
     }
@@ -69,14 +69,13 @@ exports.deleteUser = async email => {
 exports.verificateTokenLogUp = async () => {
   const query = UserModel.find(
     {
-      name: 'nico',
-      // stateAccount: {
-      // verificated: false,
-      // $where: this.timeExpiration < Date.now(),
-      // },
+      $and: [
+        { 'stateAccount.isVerificated': false },
+        { 'stateAccount.timeExpiration': { $lte: Date.now() } },
+      ],
     },
     { email: 1 },
   );
   const data = await query.exec();
-  console.log(data);
+  return data;
 };
