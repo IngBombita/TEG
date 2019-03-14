@@ -2,3 +2,39 @@
     background-color: bisque; 
     overflow:hidden;
 }
+
+#nameErorr{
+    position:fixed;
+    right: 32.7%; 
+    top: 20.7%;
+    display:block;
+}
+
+#lastNameErorr{
+    position:fixed;
+    right: 32.7%; 
+    top: 28%;
+    display:block;
+}
+
+#nickNameErorr{
+    position:fixed;
+    right: 32.7%; 
+    top: 35.4%;
+    display:block;
+}
+
+#emailErorr{
+    position:fixed;
+    right: 32.7%; 
+    top: 42.7%;
+    display:block;
+}
+
+#passwordErorr{
+    position:fixed;
+    right: 32.7%; 
+    top: 50.1%;
+    display:block;
+}
+

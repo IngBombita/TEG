@@ -7,13 +7,13 @@ exports.register = async function register(req, res) {
   let data;
   try {
     data = req.body;
-    const dataUser = logUpAdapter.register(data);
+    const dataUser = await logUpAdapter.register(data);
     logUpState = await logUpHandler.register(dataUser);
 
-    /*if (logUpState) {
+    if (logUpState) {
       const token = logUpState.stateAccount.verificationToken;
       await emailService.SendVerificationEmail(data.email, token);
-    }*/
+    }
   } catch (err) {
     res.status(err.returnState);
     res.send(err.returnMessage);

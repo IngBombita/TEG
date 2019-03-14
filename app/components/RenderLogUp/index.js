@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
@@ -10,6 +11,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import InformativeMessages from '../InformativeMessages';
 import './src/index.css';
 
 const styles = theme => ({
@@ -48,122 +52,212 @@ const styles = theme => ({
   },
 });
 
-function SignUp(props) {
-  const { classes } = props;
+class RenderLogUp extends React.PureComponent {
+  constructor(props) {
+    super(props);
 
-  let name;
-  let lastName;
-  let nickName;
-  let email;
-  let password;
+    this.classes = this.props.classes;
 
-  const handleName = event => {
-    name = event.target.value;
+    this.state = {
+      userInformation: {
+        name: '',
+        lastName: '',
+        nickName: '',
+        email: '',
+        password: '',
+      },
+      mistakes: [],
+    };
+  }
+
+  componentWillReceiveProps(props) {
+    for (const prop of props.errors) {
+      this.setState(prevState => ({ mistakes: prevState.push(prop) }));
+    }
+  }
+
+  handleName = event => {
+    const name = event.target.value;
+    this.setState(prevState => ({
+      userInformation: {
+        ...prevState.userInformation,
+        name,
+      },
+    }));
   };
 
-  const handleLastName = event => {
-    lastName = event.target.value;
+  handleLastName = event => {
+    const lastName = event.target.value;
+    this.setState(prevState => ({
+      userInformation: {
+        ...prevState.userInformation,
+        lastName,
+      },
+    }));
   };
 
-  const handleNickName = event => {
-    nickName = event.target.value;
+  handleNickName = event => {
+    const nickName = event.target.value;
+    this.setState(prevState => ({
+      userInformation: {
+        ...prevState.userInformation,
+        nickName,
+      },
+    }));
   };
 
-  const handleEmail = event => {
-    email = event.target.value;
+  handleEmail = event => {
+    const email = event.target.value;
+    this.setState(prevState => ({
+      userInformation: {
+        ...prevState.userInformation,
+        email,
+      },
+    }));
   };
 
-  const handlePassword = event => {
-    password = event.target.value;
+  handlePassword = event => {
+    const password = event.target.value;
+    this.setState(prevState => ({
+      userInformation: {
+        ...prevState.userInformation,
+        password,
+      },
+    }));
   };
 
-  const handleClick = () => {
-    props.onClick({
-      name,
-      lastName,
-      nickName,
-      email,
-      password,
+  handleClick = () => {
+    console.log(this.state);
+    this.props.onClick(this.state);
+  };
+
+  renderErrors = errors => {
+    errors.map(error => {
+      switch (error) {
+        case 'name':
+          return (
+            <div id="nameErorr">
+              <InformativeMessages visible type="error" text="eeeee" />
+            </div>
+          );
+        case 'lastName':
+          return (
+            <div id="lastNameErorr">
+              <InformativeMessages />
+            </div>
+          );
+        case 'emailErorr':
+          return (
+            <div id="emailErorr">
+              <InformativeMessages />
+            </div>
+          );
+        case 'passwordErorr':
+          return (
+            <div id="passwordErorr">
+              <InformativeMessages />
+            </div>
+          );
+        case 'nickNameErorr':
+          return (
+            <div id="nickNameErorr">
+              <InformativeMessages />
+            </div>
+          );
+        default:
+          return <span />;
+      }
     });
   };
 
-  return (
-    <div className={classes.container}>
-      <main className={classes.main}>
-        <CssBaseline />
-        <Paper className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-          <form className={classes.form}>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="email">Name</InputLabel>
-              <Input
-                id="name"
-                name="name"
-                autoComplete="name"
-                autoFocus
-                onChange={handleName}
-              />
-            </FormControl>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="email">Last Name</InputLabel>
-              <Input
-                id="lastName"
-                name="lastName"
-                autoComplete="lastName"
-                onChange={handleLastName}
-              />
-            </FormControl>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="email">Nick</InputLabel>
-              <Input
-                id="nickName"
-                name="nickName"
-                autoComplete="nickName"
-                onChange={handleNickName}
-              />
-            </FormControl>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="email">Email Address</InputLabel>
-              <Input
-                id="email"
-                name="email"
-                autoComplete="email"
-                onChange={handleEmail}
-              />
-            </FormControl>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="password">Password</InputLabel>
-              <Input
-                name="password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={handlePassword}
-              />
-            </FormControl>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={handleClick}
-            >
-              Sign up
-            </Button>
-          </form>
-        </Paper>
-      </main>
-    </div>
-  );
+  render() {
+    return (
+      <div>
+        <div>{this.renderErrors(this.state.mistakes)}</div>
+        <div className={this.classes.container}>
+          <main className={this.classes.main}>
+            <CssBaseline />
+            <Paper className={this.classes.paper}>
+              <Avatar className={this.classes.avatar}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Sign up
+              </Typography>
+              <form className={this.classes.form}>
+                <FormControl margin="normal" required fullWidth>
+                  <InputLabel htmlFor="email">Name</InputLabel>
+                  <Input
+                    id="name"
+                    name="name"
+                    autoComplete="name"
+                    autoFocus
+                    onChange={this.handleName}
+                  />
+                </FormControl>
+                <FormControl margin="normal" required fullWidth>
+                  <InputLabel htmlFor="email">Last Name</InputLabel>
+                  <Input
+                    id="lastName"
+                    name="lastName"
+                    autoComplete="lastName"
+                    onChange={this.handleLastName}
+                  />
+                </FormControl>
+                <FormControl margin="normal" required fullWidth>
+                  <InputLabel htmlFor="email">Nick</InputLabel>
+                  <Input
+                    id="nickName"
+                    name="nickName"
+                    autoComplete="nickName"
+                    onChange={this.handleNickName}
+                  />
+                </FormControl>
+                <FormControl margin="normal" required fullWidth>
+                  <InputLabel htmlFor="email">Email Address</InputLabel>
+                  <Input
+                    id="email"
+                    name="email"
+                    autoComplete="email"
+                    onChange={this.handleEmail}
+                  />
+                </FormControl>
+                <FormControl margin="normal" required fullWidth>
+                  <InputLabel htmlFor="password">Password</InputLabel>
+                  <Input
+                    name="password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    onChange={this.handlePassword}
+                  />
+                </FormControl>
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={this.classes.submit}
+                  onClick={this.handleClick}
+                >
+                  Sign up
+                </Button>
+              </form>
+            </Paper>
+          </main>
+        </div>
+      </div>
+    );
+  }
 }
 
-SignUp.propTypes = {
+RenderLogUp.propTypes = {
   classes: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(SignUp);
+export default withStyles(styles)(RenderLogUp);
